@@ -361,7 +361,7 @@ const TrialPage = ({ setPage }) => {
     setSubmitting(true);
     setError(null);
     try {
-      await fetch("https://crm.seated-social.com/api/leads", {
+      await fetch("https://admin.seatedsocial.com/api/leads.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -480,7 +480,7 @@ const PlaybookPage = ({ setPage }) => {
     if (!form.name || !form.email) return;
     setSubmitting(true);
     try {
-      await fetch("https://crm.seated-social.com/api/leads", {
+      await fetch("https://admin.seatedsocial.com/api/leads.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, source: "playbook-download", submitted_at: new Date().toISOString() }),
