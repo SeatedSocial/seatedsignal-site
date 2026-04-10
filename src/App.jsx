@@ -1,5 +1,3 @@
-import { useState } from "react"
-
 // ============================================================
 // BRAND TOKENS
 // ============================================================
@@ -403,7 +401,7 @@ const HomePage = ({ setPage }) => (
       </div>
       <div className="ss-roi-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20, marginBottom: 32 }}>
         {[
-          { num: "29pts", label: "above industry average retention rate for Signal carriers" },
+          { num: "< 48 hrs", label: "average time from a negative driver response to carrier action" },
           { num: "$8,500", label: "average replacement cost per driver saved" },
           { num: "< 60 days", label: "average time to positive ROI for new carriers" },
         ].map((s, i) => (
