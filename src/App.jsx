@@ -178,6 +178,23 @@ const Nav = ({ page, setPage }) => {
 const Footer = ({ setPage }) => (
   <footer style={{ background: C.navy, borderTop: `1px solid ${C.light}`, padding: "48px 20px 24px" }}>
     <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+      <div className="ss-family-lockup" style={{ marginBottom: 40, paddingBottom: 32, borderBottom: `1px solid ${C.light}` }}>
+        <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: C.muted, marginBottom: 16 }}>The Seated Family</div>
+        <div className="ss-family-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+          {[
+            { url: "https://seatedsocial.com",  word: "SOCIAL", tag: "Driver recruiting marketing for trucking carriers" },
+            { url: "https://seatedsignal.com", word: "SIGNAL", tag: "SMS-first driver retention" },
+            { url: "https://seatedselect.com", word: "SELECT", tag: "Video lead forms for carrier recruiting" },
+          ].map(({ url, word, tag }) => (
+            <a key={word} href={url} target="_blank" rel="noopener noreferrer" style={{ display: "flex", flexDirection: "column", gap: 6, padding: "16px 18px", border: `1px solid ${C.light}`, borderRadius: 10, background: "rgba(255,255,255,0.02)", textDecoration: "none", transition: "border-color 0.18s, transform 0.18s, background 0.18s" }} onMouseEnter={(e) => { e.currentTarget.style.borderColor = C.pink; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.background = "rgba(255,0,204,0.04)"; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = C.light; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }}>
+              <div style={{ fontSize: 15, fontWeight: 800, letterSpacing: 0.5, lineHeight: 1.2 }}>
+                <span style={{ color: C.white }}>SEATED </span><span style={{ color: C.pink }}>{word}</span>
+              </div>
+              <div style={{ fontSize: 12, color: C.muted, lineHeight: 1.4 }}>{tag}</div>
+            </a>
+          ))}
+        </div>
+      </div>
       <div className="ss-footer-grid" style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: 40, marginBottom: 40 }}>
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
@@ -742,6 +759,7 @@ export default function SeatedSignalSite() {
           .ss-roi-grid { grid-template-columns: 1fr !important; }
           .ss-pricing-grid { grid-template-columns: 1fr !important; }
           .ss-footer-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+          .ss-family-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
           .ss-included-grid { grid-template-columns: 1fr !important; }
           .ss-form-2col { grid-template-columns: 1fr !important; }
         }
