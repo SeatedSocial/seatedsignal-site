@@ -43,10 +43,11 @@ const Btn = ({ children, variant = "pink", href, onClick, style: s, disabled }) 
   return href ? <a href={href} {...props}>{children}</a> : <button {...props}>{children}</button>;
 };
 
-const StatCard = ({ num, label }) => (
+const StatCard = ({ num, label, source }) => (
   <div style={{ textAlign: "center", padding: "20px 12px" }}>
     <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 28, fontWeight: 500, color: C.pink, lineHeight: 1 }}>{num}</div>
     <div style={{ fontSize: 12, color: C.muted, marginTop: 8, fontWeight: 300, lineHeight: 1.4 }}>{label}</div>
+    {source && <div style={{ fontSize: 10, color: C.muted, marginTop: 6, fontWeight: 400, letterSpacing: 0.5, opacity: 0.7 }}>Source: {source}</div>}
   </div>
 );
 
@@ -250,11 +251,10 @@ const HomePage = ({ setPage }) => (
 
     {/* Counter Strip */}
     <Section bg={C.mid} style={{ padding: "32px 20px" }}>
-      <div className="ss-stat-row" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 0 }}>
-        <StatCard num="87%" label="of drivers say recognition matters more than pay" />
-        <StatCard num="73%" label="leave in the first 90 days" />
-        <StatCard num="2x" label="more likely to stay with consistent check-ins" />
-        <StatCard num="$8,500" label="average cost to replace one driver" />
+      <div className="ss-stat-row" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 0 }}>
+        <StatCard num="90%+" label="annual driver turnover in trucking" source="ATA" />
+        <StatCard num="35%" label="leave in the first 90 days" source="Stay Metrics" />
+        <StatCard num="$8,234" label="average cost to replace one driver" source="ATA" />
       </div>
     </Section>
 
@@ -416,12 +416,12 @@ const HomePage = ({ setPage }) => (
       <div style={{ textAlign: "center", marginBottom: 40 }}>
         <SectionLabel>The Numbers</SectionLabel>
         <h2 style={{ fontSize: 32, fontWeight: 700, color: C.white, margin: "0 0 12px" }}>The math works out fast.</h2>
-        <p style={{ fontSize: 16, color: C.muted, fontWeight: 300, maxWidth: 520, margin: "0 auto" }}>At $8,500 per driver replacement, Signal pays for itself the moment it retains your first at-risk driver.</p>
+        <p style={{ fontSize: 16, color: C.muted, fontWeight: 300, maxWidth: 520, margin: "0 auto" }}>At $8,234 per driver replacement (ATA), Signal pays for itself the moment it retains your first at-risk driver.</p>
       </div>
       <div className="ss-roi-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20, marginBottom: 32 }}>
         {[
           { num: "< 48 hrs", label: "average time from a negative driver response to carrier action" },
-          { num: "$8,500", label: "average replacement cost per driver saved" },
+          { num: "$8,234", label: "average replacement cost per driver saved", source: "ATA" },
           { num: "< 60 days", label: "average time to positive ROI for new carriers" },
         ].map((s, i) => (
           <div key={i} style={{ background: C.navy, border: `1px solid ${C.light}`, borderRadius: 14, padding: "28px 24px", textAlign: "center" }}>
@@ -478,7 +478,7 @@ const PricingPage = ({ setPage }) => (
           <SectionLabel>The Math</SectionLabel>
           <h2 style={{ fontSize: 28, fontWeight: 700, color: C.white, margin: "0 0 16px" }}>The math is simple</h2>
           <p style={{ fontSize: 15, color: C.muted, fontWeight: 300, lineHeight: 1.8 }}>
-            Replacing one driver costs $8,500 on average. If Signal keeps just 2 drivers per month from leaving, the platform pays for itself 17x over. Most carriers see positive ROI within 60 days. The in-product ROI card tracks your savings automatically — so your VP always knows exactly what Signal is worth.
+            Replacing one driver costs $8,234 on average (ATA). If Signal keeps just 2 drivers per month from leaving, the platform pays for itself 17x over. Most carriers see positive ROI within 60 days. The in-product ROI card tracks your savings automatically — so your VP always knows exactly what Signal is worth.
           </p>
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
