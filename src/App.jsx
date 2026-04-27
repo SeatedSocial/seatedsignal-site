@@ -1,4 +1,5 @@
 import { useState } from "react"
+import UConnectLanding from "./pages/UConnect"
 
 // ============================================================
 // BRAND TOKENS
@@ -734,12 +735,15 @@ const PlaybookPage = ({ setPage }) => {
 // APP
 // ============================================================
 export default function SeatedSignalSite() {
-  const [page, setPage] = useState("home");
+  const initialPage = typeof window !== "undefined" && window.location.pathname === "/uconnect" ? "uconnect" : "home";
+  const [page, setPage] = useState(initialPage);
 
   const navigate = (p) => {
     setPage(p);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  if (page === "uconnect") return <UConnectLanding />;
 
   return (
     <div style={{ background: C.navy, fontFamily: "'Outfit', sans-serif", color: C.white, minHeight: "100vh" }}>
