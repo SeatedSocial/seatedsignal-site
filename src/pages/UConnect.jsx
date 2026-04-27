@@ -1,24 +1,22 @@
 import { useState, useEffect, useRef } from "react";
 
 // Seated Signal :: UConnect26 Landing
-// Drop in as src/pages/UConnect.jsx and wire route /uconnect
-// Form posts to admin.seatedsocial.com/api/uconnect-leads.php
-// Endpoint writes to contacts (source='uconnect26') and sends Playbook via Resend
+// Pure inline styles + scoped CSS classes (no Tailwind). Matches App.jsx pattern.
 
 const C = {
   ink: "#0A1628",
   inkMid: "#132240",
-  inkSoft: "#1B2B4A",
+  inkSoft: "#1A2D4A",
   paper: "#F0F4F8",
   paperDim: "#C9D2E0",
   muted: "#5A6A80",
   pink: "#FF00CC",
-  pinkSoft: "#FFB3F0",
   line: "#22324F",
+  glow: "rgba(255,0,204,0.15)",
 };
 
-const fontStack = `'Outfit', system-ui, sans-serif`;
-const monoStack = `'DM Mono', 'JetBrains Mono', ui-monospace, monospace`;
+const fontStack = `'Outfit', sans-serif`;
+const monoStack = `'DM Mono', monospace`;
 
 export default function UConnectLanding() {
   const [form, setForm] = useState({
@@ -52,10 +50,7 @@ export default function UConnectLanding() {
     setForm((f) => ({ ...f, [k]: v }));
   };
 
-  const scrollToTrial = () => {
-    trialRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
+  const scrollToTrial = () => trialRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   const scrollToForm = (trial = false) => {
     if (trial) setForm((f) => ({ ...f, requestedTrial: true }));
     formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -88,158 +83,139 @@ export default function UConnectLanding() {
   };
 
   return (
-    <div
-      style={{
-        background: C.ink,
-        color: C.paper,
-        fontFamily: fontStack,
-        minHeight: "100vh",
-        overflowX: "hidden",
-      }}
-    >
-      <Grain />
+    <div style={{ background: C.ink, color: C.paper, fontFamily: fontStack, minHeight: "100vh", overflowX: "hidden" }}>
+      <style>{`
+        .uc-grain { position: fixed; inset: 0; pointer-events: none; opacity: 0.04; mix-blend-mode: overlay; z-index: 1;
+          background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>"); }
 
-      <header
-        className="flex items-center justify-between px-6 py-5 md:px-12"
-        style={{ borderBottom: `1px solid ${C.line}` }}
-      >
+        .uc-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 32px; border-bottom: 1px solid ${C.line}; }
+        .uc-header-meta { display: flex; align-items: center; gap: 10px; font-family: ${monoStack}; font-size: 11px; letter-spacing: 0.12em; color: ${C.paperDim}; }
+
+        .uc-hero { padding: 80px 32px 100px; }
+        .uc-hero-inner { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr; gap: 64px; align-items: start; }
+        .uc-hero-meta { display: flex; flex-wrap: wrap; gap: 28px; font-family: ${monoStack}; font-size: 11px; color: ${C.muted}; letter-spacing: 0.08em; margin-top: 40px; }
+        .uc-hero-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 40px; }
+
+        .uc-section { padding: 80px 32px; }
+        .uc-section-narrow { max-width: 760px; margin: 0 auto; }
+        .uc-section-wide { max-width: 1180px; margin: 0 auto; }
+
+        .uc-stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+        .uc-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
+        .uc-form-full { grid-column: 1 / -1; }
+        .uc-chapter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: ${C.line}; margin-top: 56px; }
+        .uc-trial-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; align-items: start; }
+        .uc-modules-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: ${C.line}; margin-top: 48px; }
+        .uc-family-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: ${C.line}; margin-top: 32px; }
+
+        .uc-btn { display: inline-block; padding: 16px 28px; font-family: ${fontStack}; font-weight: 700; font-size: 15px; cursor: pointer; border: none; transition: transform 0.18s ease, opacity 0.18s ease; text-decoration: none; }
+        .uc-btn:hover { transform: translateY(-2px); }
+        .uc-btn-pink { background: ${C.pink}; color: ${C.ink}; box-shadow: 0 0 30px ${C.glow}; }
+        .uc-btn-outline { background: transparent; color: ${C.paper}; border: 1px solid ${C.line}; }
+        .uc-btn-ghost { background: transparent; color: ${C.paper}; border: 1px solid ${C.paper}; }
+
+        .uc-input { width: 100%; background: ${C.inkMid}; border: 1px solid ${C.line}; color: ${C.paper}; padding: 14px 16px; font-size: 15px; font-family: ${fontStack}; font-weight: 400; outline: none; box-sizing: border-box; border-radius: 0; }
+        .uc-input:focus { border-color: ${C.pink}; }
+
+        .uc-faq-row { border-bottom: 1px solid ${C.line}; }
+        .uc-faq-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 22px 0; background: transparent; border: none; color: ${C.paper}; font-family: ${fontStack}; font-weight: 500; font-size: 17px; letter-spacing: -0.01em; cursor: pointer; text-align: left; }
+        .uc-faq-toggle { color: ${C.pink}; font-family: ${monoStack}; font-size: 22px; transition: transform 0.2s; }
+        .uc-faq-answer { padding: 0 0 22px 0; max-width: 640px; color: ${C.paperDim}; font-size: 15px; line-height: 1.6; font-weight: 300; }
+
+        .uc-trial-tag { display: inline-block; font-family: ${monoStack}; font-size: 11px; letter-spacing: 0.18em; color: ${C.pink}; }
+        .uc-h1 { font-family: ${fontStack}; font-weight: 800; font-size: clamp(38px, 6vw, 84px); letter-spacing: -0.03em; line-height: 1; margin: 24px 0 0; color: ${C.paper}; }
+        .uc-h2 { font-family: ${fontStack}; font-weight: 700; font-size: clamp(28px, 4vw, 44px); letter-spacing: -0.02em; line-height: 1.05; margin: 18px 0 0; color: ${C.paper}; }
+        .uc-h2-massive { font-family: ${fontStack}; font-weight: 800; font-size: clamp(56px, 10vw, 120px); letter-spacing: -0.04em; line-height: 0.95; margin: 18px 0 0; }
+        .uc-lead { font-size: 18px; line-height: 1.55; color: ${C.paperDim}; font-weight: 300; max-width: 580px; margin: 24px 0 0; }
+
+        @media (max-width: 768px) {
+          .uc-header { padding: 14px 20px; }
+          .uc-header-meta { display: none; }
+          .uc-hero { padding: 48px 20px 64px; }
+          .uc-hero-inner { grid-template-columns: 1fr; gap: 56px; }
+          .uc-section { padding: 56px 20px; }
+          .uc-stat-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+          .uc-form-grid { grid-template-columns: 1fr; }
+          .uc-chapter-grid { grid-template-columns: 1fr; }
+          .uc-trial-grid { grid-template-columns: 1fr; gap: 40px; }
+          .uc-modules-grid { grid-template-columns: 1fr; }
+          .uc-family-grid { grid-template-columns: 1fr; }
+          .uc-mobile-center { justify-content: center !important; display: flex; }
+        }
+      `}</style>
+
+      <div className="uc-grain" aria-hidden />
+
+      {/* TOP BAR */}
+      <header className="uc-header">
         <Wordmark />
-        <div
-          className="hidden md:flex items-center gap-3"
-          style={{ fontFamily: monoStack, fontSize: 11, letterSpacing: "0.12em", color: C.paperDim }}
-        >
+        <div className="uc-header-meta">
           <span style={{ color: C.pink }}>●</span>
           <span>UCONNECT26 / BELLAGIO / MAY 4</span>
         </div>
-        <a
-          href="#playbook-form"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToForm(false);
-          }}
-          className="px-4 py-2 transition-all hover:opacity-90"
-          style={{
-            fontFamily: monoStack,
-            fontSize: 11,
-            letterSpacing: "0.12em",
-            color: C.ink,
-            background: C.pink,
-            textTransform: "uppercase",
-          }}
-        >
+        <button onClick={() => scrollToForm(false)} style={{
+          padding: "10px 16px", border: "none", background: C.pink, color: C.ink,
+          fontFamily: monoStack, fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase",
+          cursor: "pointer", fontWeight: 500,
+        }}>
           Get the playbook
-        </a>
+        </button>
       </header>
 
-      <section className="relative px-6 md:px-12 pt-12 md:pt-20 pb-16 md:pb-24">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-          <div className="lg:col-span-7">
+      {/* HERO */}
+      <section className="uc-hero">
+        <div className="uc-hero-inner">
+          <div>
             <Eyebrow text="EXCLUSIVE FOR UCONNECT26 ATTENDEES" />
-            <h1
-              className="mt-6 leading-none"
-              style={{
-                fontFamily: fontStack,
-                fontWeight: 800,
-                fontSize: "clamp(2.5rem, 6vw, 5.25rem)",
-                letterSpacing: "-0.03em",
-                color: C.paper,
-              }}
-            >
-              Stop losing drivers in <br className="hidden md:block" />
-              their <PinkSpan>first 90 days.</PinkSpan>
+            <h1 className="uc-h1">
+              Stop losing drivers in their <span style={{ color: C.pink }}>first 90 days.</span>
             </h1>
-            <p
-              className="mt-7 max-w-xl"
-              style={{
-                fontSize: "1.125rem",
-                lineHeight: 1.55,
-                color: C.paperDim,
-                fontWeight: 300,
-              }}
-            >
+            <p className="uc-lead">
               The First 90 Day Retention Playbook is the field manual we use with our pilot
-              carrier R&R Transportation. Take it home from Vegas. Run it yourself. Or have us run it
-              for you for thirty days, for one hundred dollars.
+              carrier R&R Transportation. Take it home from Vegas. Run it yourself. Or have us
+              run it for you for thirty days, for one hundred dollars.
             </p>
 
-            <div className="mt-10 flex flex-col sm:flex-row gap-3">
-              <button
-                onClick={() => scrollToForm(false)}
-                className="px-7 py-4 transition-transform hover:-translate-y-0.5"
-                style={{
-                  background: C.pink,
-                  color: C.ink,
-                  fontFamily: fontStack,
-                  fontWeight: 700,
-                  letterSpacing: "-0.01em",
-                  fontSize: "1rem",
-                }}
-              >
+            <div className="uc-hero-cta">
+              <button className="uc-btn uc-btn-pink" onClick={() => scrollToForm(false)}>
                 Get the Playbook (free)
               </button>
-              <button
-                onClick={scrollToTrial}
-                className="px-7 py-4 transition-all"
-                style={{
-                  background: "transparent",
-                  color: C.paper,
-                  border: `1px solid ${C.line}`,
-                  fontFamily: fontStack,
-                  fontWeight: 500,
-                  fontSize: "1rem",
-                }}
-              >
+              <button className="uc-btn uc-btn-outline" onClick={scrollToTrial}>
                 $100 thirty-day trial →
               </button>
             </div>
 
-            <div
-              className="mt-10 flex flex-wrap gap-x-8 gap-y-3"
-              style={{ fontFamily: monoStack, fontSize: 11, color: C.muted, letterSpacing: "0.08em" }}
-            >
+            <div className="uc-hero-meta">
               <span>NO CREDIT CARD FOR THE PLAYBOOK</span>
               <span>·</span>
               <span>SHIPPED TO YOUR INBOX IN 60 SECONDS</span>
             </div>
           </div>
 
-          <div className="lg:col-span-5 flex justify-center lg:justify-end">
+          <div className="uc-mobile-center" style={{ display: "flex", justifyContent: "flex-end" }}>
             <PlaybookMock />
           </div>
         </div>
       </section>
 
-      <section
-        className="px-6 md:px-12 py-12"
-        style={{ borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.line}`, background: C.inkMid }}
-      >
-        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
-          <Stat label="INDUSTRY 90-DAY RETENTION" value="55%" sub="The number we are here to fix" />
-          <Stat label="REPLACEMENT COST PER DRIVER" value="$8K" sub="Conservative industry midpoint" />
-          <Stat label="RETURN-TO-RETENTION DELTA" value="37%" sub="When at-risk drivers actually get contacted" />
-          <Stat label="SIGNAL TOUCHPOINTS IN 90 DAYS" value="9" sub="Day 1 through Day 90, automated" />
+      {/* STAT BAND */}
+      <section className="uc-section" style={{ background: C.inkMid, borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.line}`, padding: "56px 32px" }}>
+        <div className="uc-section-wide">
+          <div className="uc-stat-grid">
+            <Stat label="INDUSTRY 90-DAY RETENTION" value="55%" sub="The number we are here to fix" />
+            <Stat label="REPLACEMENT COST PER DRIVER" value="$8K" sub="Conservative industry midpoint" />
+            <Stat label="RETURN-TO-RETENTION DELTA" value="37%" sub="When at-risk drivers actually get contacted" />
+            <Stat label="SIGNAL TOUCHPOINTS IN 90 DAYS" value="9" sub="Day 1 through Day 90, automated" />
+          </div>
         </div>
       </section>
 
-      <section ref={formRef} id="playbook-form" className="px-6 md:px-12 py-20 md:py-28">
-        <div className="max-w-3xl mx-auto">
+      {/* FORM */}
+      <section ref={formRef} className="uc-section" style={{ padding: "100px 32px" }}>
+        <div className="uc-section-narrow">
           <Eyebrow text="STEP 01 / GET THE PLAYBOOK" />
-          <h2
-            className="mt-5"
-            style={{
-              fontFamily: fontStack,
-              fontWeight: 700,
-              fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
-              letterSpacing: "-0.02em",
-              lineHeight: 1.05,
-            }}
-          >
-            Tell us where to send it.
-          </h2>
-          <p
-            className="mt-4 max-w-xl"
-            style={{ color: C.paperDim, fontSize: "1.05rem", lineHeight: 1.55, fontWeight: 300 }}
-          >
+          <h2 className="uc-h2">Tell us where to send it.</h2>
+          <p style={{ marginTop: 18, color: C.paperDim, fontSize: 17, lineHeight: 1.55, fontWeight: 300, maxWidth: 580 }}>
             The Playbook lands in your inbox immediately. If you check the box, Alex follows up
             personally about the $100 trial within one business day.
           </p>
@@ -247,21 +223,21 @@ export default function UConnectLanding() {
           {status === "success" ? (
             <SuccessCard requestedTrial={form.requestedTrial} />
           ) : (
-            <form onSubmit={submit} className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-5">
+            <form onSubmit={submit} className="uc-form-grid">
               <Field label="YOUR NAME" required>
-                <input type="text" required value={form.name} onChange={update("name")} style={inputStyle} placeholder="Hunter Carpenter" />
+                <input type="text" required value={form.name} onChange={update("name")} className="uc-input" placeholder="Hunter Carpenter" />
               </Field>
               <Field label="WORK EMAIL" required>
-                <input type="email" required value={form.email} onChange={update("email")} style={inputStyle} placeholder="hunter@carrier.com" />
+                <input type="email" required value={form.email} onChange={update("email")} className="uc-input" placeholder="hunter@carrier.com" />
               </Field>
               <Field label="CARRIER NAME" required>
-                <input type="text" required value={form.carrier} onChange={update("carrier")} style={inputStyle} placeholder="R&R Transportation" />
+                <input type="text" required value={form.carrier} onChange={update("carrier")} className="uc-input" placeholder="R&R Transportation" />
               </Field>
               <Field label="MOBILE (OPTIONAL)">
-                <input type="tel" value={form.phone} onChange={update("phone")} style={inputStyle} placeholder="208 555 0144" />
+                <input type="tel" value={form.phone} onChange={update("phone")} className="uc-input" placeholder="208 555 0144" />
               </Field>
               <Field label="FLEET SIZE">
-                <select value={form.fleetSize} onChange={update("fleetSize")} style={inputStyle}>
+                <select value={form.fleetSize} onChange={update("fleetSize")} className="uc-input">
                   <option value="">Select range</option>
                   <option value="1-25">1 to 25 trucks</option>
                   <option value="26-100">26 to 100 trucks</option>
@@ -271,24 +247,24 @@ export default function UConnectLanding() {
                 </select>
               </Field>
               <Field label="ATS (OPTIONAL)">
-                <input type="text" value={form.notes} onChange={update("notes")} style={inputStyle} placeholder="e.g. TenStreet" />
+                <input type="text" value={form.notes} onChange={update("notes")} className="uc-input" placeholder="e.g. TenStreet" />
               </Field>
 
-              <div className="md:col-span-2 mt-2">
-                <label
-                  className="flex items-start gap-3 cursor-pointer p-5 transition-colors"
-                  style={{
-                    background: form.requestedTrial ? "rgba(255, 0, 204, 0.08)" : C.inkMid,
-                    border: `1px solid ${form.requestedTrial ? C.pink : C.line}`,
-                  }}
-                >
-                  <input type="checkbox" checked={form.requestedTrial} onChange={update("requestedTrial")} style={{ marginTop: 4, accentColor: C.pink }} />
+              <div className="uc-form-full" style={{ marginTop: 12 }}>
+                <label style={{
+                  display: "flex", alignItems: "flex-start", gap: 14, cursor: "pointer", padding: 22,
+                  background: form.requestedTrial ? "rgba(255, 0, 204, 0.08)" : C.inkMid,
+                  border: `1px solid ${form.requestedTrial ? C.pink : C.line}`,
+                  transition: "all 0.18s ease",
+                }}>
+                  <input type="checkbox" checked={form.requestedTrial} onChange={update("requestedTrial")}
+                    style={{ marginTop: 4, accentColor: C.pink, width: 18, height: 18, cursor: "pointer" }} />
                   <span>
                     <span style={{ fontFamily: monoStack, fontSize: 11, letterSpacing: "0.12em", color: C.pink }}>ALSO YES</span>
                     <br />
-                    <span style={{ fontWeight: 600, fontSize: "1.05rem" }}>Apply for the $100 thirty-day trial</span>
+                    <span style={{ fontWeight: 600, fontSize: 17 }}>Apply for the $100 thirty-day trial</span>
                     <br />
-                    <span style={{ color: C.paperDim, fontSize: "0.95rem", fontWeight: 300 }}>
+                    <span style={{ color: C.paperDim, fontSize: 15, fontWeight: 300 }}>
                       Full access. Up to 25 drivers. All modules. Alex onboards you personally.
                     </span>
                   </span>
@@ -296,26 +272,19 @@ export default function UConnectLanding() {
               </div>
 
               {status === "error" && (
-                <div className="md:col-span-2 px-4 py-3" style={{ background: "rgba(255, 80, 80, 0.1)", color: "#FFB3B3", fontSize: "0.9rem" }}>
+                <div className="uc-form-full" style={{
+                  background: "rgba(255, 80, 80, 0.1)", color: "#FFB3B3",
+                  fontSize: 14, padding: "14px 18px",
+                }}>
                   {errorMsg}
                 </div>
               )}
 
-              <div className="md:col-span-2 flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-2">
-                <button
-                  type="submit"
-                  disabled={status === "submitting"}
-                  className="px-8 py-4 transition-transform hover:-translate-y-0.5"
-                  style={{
-                    background: C.pink,
-                    color: C.ink,
-                    fontFamily: fontStack,
-                    fontWeight: 700,
-                    fontSize: "1rem",
-                    opacity: status === "submitting" ? 0.6 : 1,
-                    cursor: status === "submitting" ? "wait" : "pointer",
-                  }}
-                >
+              <div className="uc-form-full" style={{
+                display: "flex", flexWrap: "wrap", alignItems: "center", gap: 18, marginTop: 8,
+              }}>
+                <button type="submit" className="uc-btn uc-btn-pink" disabled={status === "submitting"}
+                  style={{ opacity: status === "submitting" ? 0.6 : 1, cursor: status === "submitting" ? "wait" : "pointer" }}>
                   {status === "submitting" ? "Sending..." : "Send me the Playbook →"}
                 </button>
                 <span style={{ fontFamily: monoStack, fontSize: 11, color: C.muted, letterSpacing: "0.08em" }}>
@@ -327,24 +296,15 @@ export default function UConnectLanding() {
         </div>
       </section>
 
-      <section className="px-6 md:px-12 py-20" style={{ background: C.inkMid }}>
-        <div className="max-w-6xl mx-auto">
+      {/* WHAT'S INSIDE */}
+      <section className="uc-section" style={{ background: C.inkMid }}>
+        <div className="uc-section-wide">
           <Eyebrow text="WHAT'S INSIDE" />
-          <h2
-            className="mt-5 max-w-3xl"
-            style={{
-              fontFamily: fontStack,
-              fontWeight: 700,
-              fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
-              letterSpacing: "-0.02em",
-              lineHeight: 1.05,
-            }}
-          >
-            Forty-eight pages. Nine touchpoints. <br />
-            <span style={{ color: C.pink }}>Zero filler.</span>
+          <h2 className="uc-h2" style={{ maxWidth: 760 }}>
+            Forty-eight pages. Nine touchpoints. <span style={{ color: C.pink }}>Zero filler.</span>
           </h2>
 
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px" style={{ background: C.line }}>
+          <div className="uc-chapter-grid">
             {[
               { n: "01", t: "The 90-Day Window", d: "Why nearly half of new hires churn before their first quarter, and the four leaks that cause it." },
               { n: "02", t: "Day-by-Day Touchpoint Map", d: "Exactly what to send on Day 1, 7, 14, 21, 30, 45, 60, 80, and 90. Copy you can lift." },
@@ -353,14 +313,14 @@ export default function UConnectLanding() {
               { n: "05", t: "The Spotlight Engine", d: "Four-layer recognition flow that turns retained drivers into recruiting content without a video crew." },
               { n: "06", t: "ROI Worksheet", d: "Plug your hire cost, your turnover rate, and your average tenure. See your annualized leak in dollars." },
             ].map((b) => (
-              <div key={b.n} className="p-8" style={{ background: C.ink }}>
+              <div key={b.n} style={{ padding: 32, background: C.ink }}>
                 <div style={{ fontFamily: monoStack, fontSize: 11, letterSpacing: "0.15em", color: C.pink }}>
                   CHAPTER {b.n}
                 </div>
-                <h3 className="mt-4" style={{ fontFamily: fontStack, fontWeight: 600, fontSize: "1.25rem", letterSpacing: "-0.01em" }}>
+                <h3 style={{ marginTop: 16, fontFamily: fontStack, fontWeight: 600, fontSize: 20, letterSpacing: "-0.01em", color: C.paper }}>
                   {b.t}
                 </h3>
-                <p className="mt-3" style={{ color: C.paperDim, fontSize: "0.95rem", lineHeight: 1.55, fontWeight: 300 }}>
+                <p style={{ marginTop: 12, color: C.paperDim, fontSize: 15, lineHeight: 1.55, fontWeight: 300 }}>
                   {b.d}
                 </p>
               </div>
@@ -369,232 +329,146 @@ export default function UConnectLanding() {
         </div>
       </section>
 
-      <section ref={trialRef} id="trial" className="relative px-6 md:px-12 py-24 md:py-32" style={{ borderTop: `1px solid ${C.line}` }}>
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            <div className="lg:col-span-7">
+      {/* TRIAL: $100 */}
+      <section ref={trialRef} className="uc-section" style={{ padding: "120px 32px", borderTop: `1px solid ${C.line}` }}>
+        <div className="uc-section-wide">
+          <div className="uc-trial-grid">
+            <div>
               <Eyebrow text="STEP 02 / OPTIONAL UPGRADE" />
-              <h2
-                className="mt-6 leading-none"
-                style={{
-                  fontFamily: fontStack,
-                  fontWeight: 800,
-                  fontSize: "clamp(3rem, 9vw, 7rem)",
-                  letterSpacing: "-0.04em",
-                }}
-              >
+              <h2 className="uc-h2-massive">
                 <span style={{ color: C.pink }}>$100</span>
                 <br />
-                <span style={{ color: C.paperDim, fontWeight: 300, fontSize: "0.4em" }}>for thirty days of Signal,</span>
+                <span style={{ color: C.paperDim, fontWeight: 300, fontSize: "0.4em", letterSpacing: "-0.02em" }}>
+                  for thirty days of Signal,
+                </span>
                 <br />
-                <span style={{ color: C.paperDim, fontWeight: 300, fontSize: "0.4em" }}>fully run for you.</span>
+                <span style={{ color: C.paperDim, fontWeight: 300, fontSize: "0.4em", letterSpacing: "-0.02em" }}>
+                  fully run for you.
+                </span>
               </h2>
 
-              <p className="mt-8 max-w-xl" style={{ color: C.paperDim, fontSize: "1.1rem", lineHeight: 1.55, fontWeight: 300 }}>
+              <p className="uc-lead">
                 We onboard you. We write the touchpoints. We stand up your dedicated SMS number.
                 You watch the dashboard fill up with real driver replies, sentiment scores, and
                 flags. Thirty days. One hundred dollars. No contract.
               </p>
 
-              <div className="mt-10">
-                <button
-                  onClick={() => scrollToForm(true)}
-                  className="px-8 py-4 transition-transform hover:-translate-y-0.5"
-                  style={{
-                    background: C.pink,
-                    color: C.ink,
-                    fontFamily: fontStack,
-                    fontWeight: 700,
-                    fontSize: "1.05rem",
-                  }}
-                >
+              <div style={{ marginTop: 36 }}>
+                <button className="uc-btn uc-btn-pink" onClick={() => scrollToForm(true)}>
                   Apply for the trial →
                 </button>
               </div>
             </div>
 
-            <div className="lg:col-span-5">
-              <div className="p-8" style={{ background: C.inkMid, border: `1px solid ${C.line}` }}>
-                <div style={{ fontFamily: monoStack, fontSize: 11, letterSpacing: "0.15em", color: C.pink }}>
-                  WHAT'S INCLUDED
-                </div>
-                <ul className="mt-6 space-y-4">
-                  {[
-                    "Full Signal access for 30 days, all modules unlocked",
-                    "Up to 25 drivers enrolled in your First 90 sequence",
-                    "Dedicated 10DLC SMS number provisioned for your carrier",
-                    "Personal Loom walkthrough from Alex within 24 hours",
-                    "Live dashboard, sentiment scoring, flagging engine, Spotlights",
-                    "Inside the Cab weekly content scheduled by us",
-                    "Branded Welcome Kit shipped to your office",
-                    "No contract, no auto-renew, manual close at day 30",
-                  ].map((item, i) => (
-                    <li key={i} className="flex gap-3" style={{ fontSize: "0.95rem", lineHeight: 1.5 }}>
-                      <span style={{ color: C.pink, fontWeight: 700, flexShrink: 0 }}>✓</span>
-                      <span style={{ color: C.paper, fontWeight: 400 }}>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div
-                  className="mt-8 pt-6"
-                  style={{ borderTop: `1px solid ${C.line}`, fontFamily: monoStack, fontSize: 11, color: C.muted, letterSpacing: "0.1em" }}
-                >
-                  TRIAL CAPPED AT 10 CARRIERS FROM UCONNECT26
-                </div>
+            <div style={{ background: C.inkMid, border: `1px solid ${C.line}`, padding: 32 }}>
+              <div style={{ fontFamily: monoStack, fontSize: 11, letterSpacing: "0.15em", color: C.pink }}>
+                WHAT'S INCLUDED
+              </div>
+              <ul style={{ listStyle: "none", padding: 0, margin: "24px 0 0", display: "flex", flexDirection: "column", gap: 16 }}>
+                {[
+                  "Full Signal access for 30 days, all modules unlocked",
+                  "Up to 25 drivers enrolled in your First 90 sequence",
+                  "Dedicated 10DLC SMS number provisioned for your carrier",
+                  "Personal Loom walkthrough from Alex within 24 hours",
+                  "Live dashboard, sentiment scoring, flagging engine, Spotlights",
+                  "Inside the Cab weekly content scheduled by us",
+                  "Branded Welcome Kit shipped to your office",
+                  "No contract, no auto-renew, manual close at day 30",
+                ].map((item, i) => (
+                  <li key={i} style={{ display: "flex", gap: 12, fontSize: 15, lineHeight: 1.5 }}>
+                    <span style={{ color: C.pink, fontWeight: 700, flexShrink: 0 }}>✓</span>
+                    <span style={{ color: C.paper, fontWeight: 400 }}>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div style={{
+                marginTop: 32, paddingTop: 24, borderTop: `1px solid ${C.line}`,
+                fontFamily: monoStack, fontSize: 11, color: C.muted, letterSpacing: "0.1em",
+              }}>
+                TRIAL CAPPED AT 10 CARRIERS FROM UCONNECT26
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="px-6 md:px-12 py-20" style={{ background: C.inkMid }}>
-        <div className="max-w-6xl mx-auto">
+      {/* MODULES */}
+      <section className="uc-section" style={{ background: C.inkMid }}>
+        <div className="uc-section-wide">
           <Eyebrow text="THE THREE MODULES" />
-          <h2
-            className="mt-5"
-            style={{
-              fontFamily: fontStack,
-              fontWeight: 700,
-              fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
-              letterSpacing: "-0.02em",
-              lineHeight: 1.05,
-            }}
-          >
-            What you actually get when you turn it on.
-          </h2>
+          <h2 className="uc-h2">What you actually get when you turn it on.</h2>
 
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-px" style={{ background: C.line }}>
-            <ModuleCard
-              tag="ONBOARDING"
-              title="First 90 Days"
-              body="Nine SMS touchpoints from Day 1 to Day 90, automated and tied to each driver's hire date. Page links, reply prompts, milestone celebrations."
-            />
-            <ModuleCard
-              tag="ENGAGEMENT"
-              title="Inside the Cab"
-              body="Weekly pulse content delivered to all drivers or any segment. Leadership videos, shoutouts, company updates, open prompts. We schedule it."
-            />
-            <ModuleCard
-              tag="RECOGNITION"
-              title="Driver Spotlights"
-              body="Four-layer recognition flow. Private SMS to the driver, fleet-wide share, Facebook auto-post, branded gallery page. Drivers feel seen."
-            />
+          <div className="uc-modules-grid">
+            <ModuleCard tag="ONBOARDING" title="First 90 Days"
+              body="Nine SMS touchpoints from Day 1 to Day 90, automated and tied to each driver's hire date. Page links, reply prompts, milestone celebrations." />
+            <ModuleCard tag="ENGAGEMENT" title="Inside the Cab"
+              body="Weekly pulse content delivered to all drivers or any segment. Leadership videos, shoutouts, company updates, open prompts. We schedule it." />
+            <ModuleCard tag="RECOGNITION" title="Driver Spotlights"
+              body="Four-layer recognition flow. Private SMS to the driver, fleet-wide share, Facebook auto-post, branded gallery page. Drivers feel seen." />
           </div>
         </div>
       </section>
 
-      <section className="px-6 md:px-12 py-20">
-        <div className="max-w-3xl mx-auto">
+      {/* FAQ */}
+      <section className="uc-section">
+        <div className="uc-section-narrow">
           <Eyebrow text="FAQ" />
-          <h2
-            className="mt-5"
-            style={{
-              fontFamily: fontStack,
-              fontWeight: 700,
-              fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
-              letterSpacing: "-0.02em",
-              lineHeight: 1.05,
-            }}
-          >
-            Quick answers, no fluff.
-          </h2>
+          <h2 className="uc-h2">Quick answers, no fluff.</h2>
 
-          <div className="mt-10">
+          <div style={{ marginTop: 40 }}>
             {[
-              {
-                q: "Is the Playbook actually free?",
-                a: "Yes. No card, no trial, no autoplay video sales pitch. You give us your email, we send you a forty-eight page PDF. The trial is opt-in on a separate checkbox.",
-              },
-              {
-                q: "What happens after the 30-day trial?",
-                a: "Nothing automatic. We talk on day 28. If Signal earned its keep you pick a tier. If not, we shut it down clean and you keep the data export.",
-              },
-              {
-                q: "What if we already use TenStreet?",
-                a: "Good. Signal pulls new hires from TenStreet automatically, so your existing stack stays put. Other ATS integrations are on the roadmap.",
-              },
-              {
-                q: "Will my drivers have to download an app?",
-                a: "No. Signal is SMS-first by design. Drivers text and tap branded links. Zero app installs. Zero passwords.",
-              },
-              {
-                q: "What about A2P 10DLC compliance?",
-                a: "We handle it. Each carrier gets a dedicated 10DLC number under our registered platform campaign. Consent language goes into your driver onboarding paperwork. We supply the template.",
-              },
-              {
-                q: "Can I see it before I commit $100?",
-                a: "Yes. Email alex@seated-social.com and we will grab 20 minutes on a live tenant over Zoom. If you are at UConnect26, text 208 504 2701 and we will find time between sessions.",
-              },
-            ].map((item, i) => (
-              <Faq key={i} q={item.q} a={item.a} />
-            ))}
+              { q: "Is the Playbook actually free?",
+                a: "Yes. No card, no trial, no autoplay video sales pitch. You give us your email, we send you a forty-eight page PDF. The trial is opt-in on a separate checkbox." },
+              { q: "What happens after the 30-day trial?",
+                a: "Nothing automatic. We talk on day 28. If Signal earned its keep you pick a tier. If not, we shut it down clean and you keep the data export." },
+              { q: "What if we already use TenStreet?",
+                a: "Good. Signal pulls new hires from TenStreet automatically, so your existing stack stays put. Other ATS integrations are on the roadmap." },
+              { q: "Will my drivers have to download an app?",
+                a: "No. Signal is SMS-first by design. Drivers text and tap branded links. Zero app installs. Zero passwords." },
+              { q: "What about A2P 10DLC compliance?",
+                a: "We handle it. Each carrier gets a dedicated 10DLC number under our registered platform campaign. Consent language goes into your driver onboarding paperwork. We supply the template." },
+              { q: "Can I see it before I commit $100?",
+                a: "Yes. Email alex@seated-social.com and we will grab 20 minutes on a live tenant over Zoom. If you are at UConnect26, text 208 504 2701 and we will find time between sessions." },
+            ].map((item, i) => <Faq key={i} q={item.q} a={item.a} />)}
           </div>
         </div>
       </section>
 
-      <section
-        className="px-6 md:px-12 py-20 md:py-28 text-center"
-        style={{ borderTop: `1px solid ${C.line}`, background: C.inkMid }}
-      >
-        <div className="max-w-3xl mx-auto">
-          <h2
-            style={{
-              fontFamily: fontStack,
-              fontWeight: 800,
-              fontSize: "clamp(2rem, 5vw, 3.5rem)",
-              letterSpacing: "-0.03em",
-              lineHeight: 1.05,
-            }}
-          >
+      {/* CLOSING CTA */}
+      <section className="uc-section" style={{
+        background: C.inkMid, borderTop: `1px solid ${C.line}`, padding: "100px 32px", textAlign: "center",
+      }}>
+        <div className="uc-section-narrow">
+          <h2 style={{
+            fontFamily: fontStack, fontWeight: 800, fontSize: "clamp(32px, 5vw, 56px)",
+            letterSpacing: "-0.03em", lineHeight: 1.05, margin: 0, color: C.paper,
+          }}>
             Take the Playbook home from Vegas. <br />
             <span style={{ color: C.pink }}>Or take Signal home with you.</span>
           </h2>
-          <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
-            <button
-              onClick={() => scrollToForm(false)}
-              className="px-8 py-4"
-              style={{
-                background: C.pink,
-                color: C.ink,
-                fontFamily: fontStack,
-                fontWeight: 700,
-                fontSize: "1rem",
-              }}
-            >
-              Get the Playbook
-            </button>
-            <button
-              onClick={() => scrollToForm(true)}
-              className="px-8 py-4"
-              style={{
-                background: "transparent",
-                color: C.paper,
-                border: `1px solid ${C.paper}`,
-                fontFamily: fontStack,
-                fontWeight: 500,
-                fontSize: "1rem",
-              }}
-            >
-              Apply for the $100 trial
-            </button>
+          <div style={{ marginTop: 40, display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+            <button className="uc-btn uc-btn-pink" onClick={() => scrollToForm(false)}>Get the Playbook</button>
+            <button className="uc-btn uc-btn-ghost" onClick={() => scrollToForm(true)}>Apply for the $100 trial</button>
           </div>
         </div>
       </section>
 
-      <footer className="px-6 md:px-12 py-16" style={{ background: C.ink, borderTop: `1px solid ${C.line}` }}>
-        <div className="max-w-6xl mx-auto">
+      {/* SEATED FAMILY */}
+      <footer className="uc-section" style={{ background: C.ink, borderTop: `1px solid ${C.line}`, padding: "64px 32px" }}>
+        <div className="uc-section-wide">
           <div style={{ fontFamily: monoStack, fontSize: 11, letterSpacing: "0.15em", color: C.muted }}>
             THE SEATED FAMILY
           </div>
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-px" style={{ background: C.line }}>
-            <FamilyCard name="SEATED SOCIAL" tag="Driver recruiting marketing for trucking carriers." href="https://seated-social.com" />
-            <FamilyCard name="SEATED SIGNAL" tag="SMS-first driver retention." href="https://seatedsignal.com" highlight />
-            <FamilyCard name="SEATED SELECT" tag="Video lead forms for carrier recruiting." href="https://seatedselect.com" />
+          <div className="uc-family-grid">
+            <FamilyCard name="SEATED" name2="SOCIAL" tag="Driver recruiting marketing for trucking carriers." href="https://seated-social.com" />
+            <FamilyCard name="SEATED" name2="SIGNAL" tag="SMS-first driver retention." href="https://seatedsignal.com" highlight />
+            <FamilyCard name="SEATED" name2="SELECT" tag="Video lead forms for carrier recruiting." href="https://seatedselect.com" />
           </div>
-          <div
-            className="mt-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
-            style={{ fontFamily: monoStack, fontSize: 11, color: C.muted, letterSpacing: "0.08em" }}
-          >
+          <div style={{
+            marginTop: 36, display: "flex", justifyContent: "space-between", alignItems: "center",
+            flexWrap: "wrap", gap: 12,
+            fontFamily: monoStack, fontSize: 11, color: C.muted, letterSpacing: "0.08em",
+          }}>
             <span>© 2026 SEATED SOCIAL LLC</span>
             <span>BUILT FOR UCONNECT26 / BELLAGIO / MAY 4</span>
           </div>
@@ -604,9 +478,11 @@ export default function UConnectLanding() {
   );
 }
 
+/* ---------- subcomponents ---------- */
+
 function Wordmark() {
   return (
-    <div className="flex items-center gap-2.5">
+    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
       <SignalWave />
       <span style={{ fontFamily: fontStack, fontSize: 16, letterSpacing: "0.02em" }}>
         <span style={{ fontWeight: 300, color: C.paperDim }}>SEATED</span>{" "}
@@ -618,14 +494,14 @@ function Wordmark() {
 
 function SignalWave() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
       <defs>
-        <linearGradient id="sg" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+        <linearGradient id="ucsg" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
           <stop stopColor="#FF00CC" />
           <stop offset="1" stopColor="#9333EA" />
         </linearGradient>
       </defs>
-      <path d="M2 12 Q 6 4, 10 12 T 18 12 T 22 12" stroke="url(#sg)" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+      <path d="M2 12 C 5 6, 8 18, 11 12 C 14 6, 17 18, 22 12" stroke="url(#ucsg)" strokeWidth="2.5" strokeLinecap="round" fill="none" />
     </svg>
   );
 }
@@ -639,84 +515,54 @@ function Eyebrow({ text }) {
   );
 }
 
-function PinkSpan({ children }) {
-  return <span style={{ color: C.pink }}>{children}</span>;
-}
-
 function Stat({ label, value, sub }) {
   return (
     <div>
-      <div style={{ fontFamily: monoStack, fontSize: 10, letterSpacing: "0.15em", color: C.muted }}>
-        {label}
-      </div>
-      <div
-        className="mt-3"
-        style={{
-          fontFamily: fontStack,
-          fontWeight: 800,
-          fontSize: "2.5rem",
-          letterSpacing: "-0.03em",
-          color: C.paper,
-          lineHeight: 1,
-        }}
-      >
+      <div style={{ fontFamily: monoStack, fontSize: 10, letterSpacing: "0.15em", color: C.muted }}>{label}</div>
+      <div style={{
+        marginTop: 12, fontFamily: fontStack, fontWeight: 800, fontSize: "clamp(32px, 4vw, 48px)",
+        letterSpacing: "-0.03em", color: C.paper, lineHeight: 1,
+      }}>
         {value}
       </div>
-      <div className="mt-2" style={{ fontSize: 12, color: C.paperDim, fontWeight: 300, lineHeight: 1.4 }}>
-        {sub}
-      </div>
+      <div style={{ marginTop: 8, fontSize: 12, color: C.paperDim, fontWeight: 300, lineHeight: 1.4 }}>{sub}</div>
     </div>
   );
 }
 
 function PlaybookMock() {
   return (
-    <div
-      className="relative"
-      style={{
-        width: "min(360px, 80vw)",
-        aspectRatio: "3 / 4",
-        transform: "perspective(1000px) rotateY(-12deg) rotateX(4deg)",
-        transformStyle: "preserve-3d",
-        boxShadow: "0 50px 80px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05)",
-      }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: `linear-gradient(135deg, ${C.inkMid} 0%, ${C.ink} 100%)`,
-          padding: "32px 28px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          border: `1px solid ${C.line}`,
-        }}
-      >
+    <div style={{
+      width: "min(360px, 80vw)",
+      aspectRatio: "3 / 4",
+      transform: "perspective(1200px) rotateY(-12deg) rotateX(4deg)",
+      boxShadow: "0 50px 80px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05)",
+      position: "relative",
+    }}>
+      <div style={{
+        position: "absolute", inset: 0,
+        background: `linear-gradient(135deg, ${C.inkMid} 0%, ${C.ink} 100%)`,
+        padding: "32px 28px", display: "flex", flexDirection: "column",
+        justifyContent: "space-between", border: `1px solid ${C.line}`,
+      }}>
         <div>
           <div style={{ fontFamily: monoStack, fontSize: 10, letterSpacing: "0.18em", color: C.pink }}>
             ● SEATED SIGNAL / ED. 01
           </div>
-          <div className="mt-8" style={{ fontFamily: monoStack, fontSize: 10, letterSpacing: "0.15em", color: C.muted }}>
+          <div style={{ marginTop: 32, fontFamily: monoStack, fontSize: 10, letterSpacing: "0.15em", color: C.muted }}>
             FIELD MANUAL
           </div>
         </div>
         <div>
-          <h3
-            style={{
-              fontFamily: fontStack,
-              fontWeight: 800,
-              fontSize: "2.25rem",
-              letterSpacing: "-0.03em",
-              lineHeight: 1.0,
-              color: C.paper,
-            }}
-          >
+          <h3 style={{
+            fontFamily: fontStack, fontWeight: 800, fontSize: 36,
+            letterSpacing: "-0.03em", lineHeight: 1, color: C.paper, margin: 0,
+          }}>
             The First <br />
             <span style={{ color: C.pink }}>90 Days.</span>
           </h3>
-          <div className="mt-4" style={{ width: 60, height: 2, background: C.pink }} />
-          <div className="mt-4" style={{ fontSize: 13, color: C.paperDim, fontWeight: 300, lineHeight: 1.5 }}>
+          <div style={{ marginTop: 16, width: 60, height: 2, background: C.pink }} />
+          <div style={{ marginTop: 16, fontSize: 13, color: C.paperDim, fontWeight: 300, lineHeight: 1.5 }}>
             A field manual for retaining truck drivers in the window where most carriers lose them.
           </div>
         </div>
@@ -724,31 +570,21 @@ function PlaybookMock() {
           BY ALEX CARPENTER · UCONNECT26 EDITION
         </div>
       </div>
-      <div
-        style={{
-          position: "absolute",
-          left: -8,
-          top: 0,
-          bottom: 0,
-          width: 8,
-          background: "linear-gradient(to right, rgba(0,0,0,0.3), transparent)",
-          transform: "translateZ(-1px)",
-        }}
-      />
     </div>
   );
 }
 
 function ModuleCard({ tag, title, body }) {
   return (
-    <div className="p-8" style={{ background: C.ink }}>
-      <div style={{ fontFamily: monoStack, fontSize: 11, letterSpacing: "0.15em", color: C.pink }}>
-        {tag}
-      </div>
-      <h3 className="mt-4" style={{ fontFamily: fontStack, fontWeight: 700, fontSize: "1.5rem", letterSpacing: "-0.01em" }}>
+    <div style={{ padding: 32, background: C.ink }}>
+      <div style={{ fontFamily: monoStack, fontSize: 11, letterSpacing: "0.15em", color: C.pink }}>{tag}</div>
+      <h3 style={{
+        marginTop: 16, fontFamily: fontStack, fontWeight: 700, fontSize: 24,
+        letterSpacing: "-0.01em", color: C.paper,
+      }}>
         {title}
       </h3>
-      <p className="mt-3" style={{ color: C.paperDim, fontSize: "0.95rem", lineHeight: 1.55, fontWeight: 300 }}>
+      <p style={{ marginTop: 12, color: C.paperDim, fontSize: 15, lineHeight: 1.55, fontWeight: 300 }}>
         {body}
       </p>
     </div>
@@ -758,53 +594,33 @@ function ModuleCard({ tag, title, body }) {
 function Faq({ q, a }) {
   const [open, setOpen] = useState(false);
   return (
-    <div style={{ borderBottom: `1px solid ${C.line}` }}>
-      <button
-        onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center justify-between py-6 text-left transition-colors"
-        style={{ background: "transparent", color: C.paper }}
-      >
-        <span style={{ fontFamily: fontStack, fontWeight: 500, fontSize: "1.1rem", letterSpacing: "-0.01em" }}>
-          {q}
-        </span>
-        <span
-          style={{
-            color: C.pink,
-            fontFamily: monoStack,
-            fontSize: "1.25rem",
-            transform: open ? "rotate(45deg)" : "none",
-            transition: "transform 200ms",
-          }}
-        >
-          +
-        </span>
+    <div className="uc-faq-row">
+      <button className="uc-faq-btn" onClick={() => setOpen((o) => !o)}>
+        <span>{q}</span>
+        <span className="uc-faq-toggle" style={{ transform: open ? "rotate(45deg)" : "none" }}>+</span>
       </button>
-      {open && (
-        <p className="pb-6 max-w-2xl" style={{ color: C.paperDim, fontSize: "1rem", lineHeight: 1.6, fontWeight: 300 }}>
-          {a}
-        </p>
-      )}
+      {open && <p className="uc-faq-answer">{a}</p>}
     </div>
   );
 }
 
-function FamilyCard({ name, tag, href, highlight }) {
+function FamilyCard({ name, name2, tag, href, highlight }) {
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      className="p-7 transition-colors hover:opacity-90"
-      style={{ background: C.ink, textDecoration: "none", color: C.paper, display: "block" }}
-    >
-      <div style={{ fontFamily: fontStack, fontSize: 18, letterSpacing: "0.05em", color: highlight ? C.pink : C.paper }}>
-        <span style={{ fontWeight: 300 }}>{name.split(" ")[0]}</span>{" "}
-        <span style={{ fontWeight: 800 }}>{name.split(" ")[1]}</span>
+    <a href={href} target="_blank" rel="noreferrer" style={{
+      padding: 28, background: C.ink, textDecoration: "none", color: C.paper, display: "block",
+      transition: "opacity 0.18s ease",
+    }}>
+      <div style={{
+        fontFamily: fontStack, fontSize: 18, letterSpacing: "0.05em",
+        color: highlight ? C.pink : C.paper,
+      }}>
+        <span style={{ fontWeight: 300 }}>{name}</span>{" "}
+        <span style={{ fontWeight: 800 }}>{name2}</span>
       </div>
-      <div className="mt-3" style={{ color: C.paperDim, fontSize: "0.9rem", fontWeight: 300, lineHeight: 1.5 }}>
+      <div style={{ marginTop: 12, color: C.paperDim, fontSize: 14, fontWeight: 300, lineHeight: 1.5 }}>
         {tag}
       </div>
-      <div className="mt-5" style={{ fontFamily: monoStack, fontSize: 10, letterSpacing: "0.15em", color: C.muted }}>
+      <div style={{ marginTop: 20, fontFamily: monoStack, fontSize: 10, letterSpacing: "0.15em", color: C.muted }}>
         VISIT →
       </div>
     </a>
@@ -813,77 +629,42 @@ function FamilyCard({ name, tag, href, highlight }) {
 
 function Field({ label, required, children }) {
   return (
-    <label className="block">
+    <label style={{ display: "block" }}>
       <span style={{ fontFamily: monoStack, fontSize: 10, letterSpacing: "0.15em", color: C.muted }}>
         {label}
         {required && <span style={{ color: C.pink }}> *</span>}
       </span>
-      <div className="mt-2">{children}</div>
+      <div style={{ marginTop: 8 }}>{children}</div>
     </label>
   );
 }
 
-const inputStyle = {
-  width: "100%",
-  background: C.inkMid,
-  border: `1px solid ${C.line}`,
-  color: C.paper,
-  padding: "14px 16px",
-  fontSize: "0.95rem",
-  fontFamily: fontStack,
-  fontWeight: 400,
-  outline: "none",
-};
-
 function SuccessCard({ requestedTrial }) {
   return (
-    <div className="mt-10 p-10" style={{ background: C.inkMid, border: `1px solid ${C.pink}` }}>
-      <div style={{ fontFamily: monoStack, fontSize: 11, letterSpacing: "0.18em", color: C.pink }}>
-        ● SENT
-      </div>
-      <h3
-        className="mt-4"
-        style={{
-          fontFamily: fontStack,
-          fontWeight: 700,
-          fontSize: "1.75rem",
-          letterSpacing: "-0.02em",
-          color: C.paper,
-        }}
-      >
+    <div style={{
+      marginTop: 40, padding: 40,
+      background: C.inkMid, border: `1px solid ${C.pink}`,
+    }}>
+      <div style={{ fontFamily: monoStack, fontSize: 11, letterSpacing: "0.18em", color: C.pink }}>● SENT</div>
+      <h3 style={{
+        marginTop: 16, fontFamily: fontStack, fontWeight: 700, fontSize: 28,
+        letterSpacing: "-0.02em", color: C.paper,
+      }}>
         Playbook is on its way.
       </h3>
-      <p className="mt-4 max-w-xl" style={{ color: C.paperDim, fontSize: "1rem", lineHeight: 1.55, fontWeight: 300 }}>
+      <p style={{ marginTop: 18, maxWidth: 580, color: C.paperDim, fontSize: 16, lineHeight: 1.55, fontWeight: 300 }}>
         Check your inbox in the next 60 seconds. The PDF is attached to the email. If it doesn't
         show up, look in spam, then email alex@seated-social.com.
       </p>
       {requestedTrial && (
-        <div
-          className="mt-6 pt-6"
-          style={{ borderTop: `1px solid ${C.line}`, fontSize: "1rem", color: C.paper, lineHeight: 1.55 }}
-        >
-          <strong style={{ color: C.pink }}>Trial application received.</strong> Alex will reach out
-          within one business day to walk you through onboarding and process the $100.
+        <div style={{
+          marginTop: 24, paddingTop: 24, borderTop: `1px solid ${C.line}`,
+          fontSize: 16, color: C.paper, lineHeight: 1.55,
+        }}>
+          <strong style={{ color: C.pink }}>Trial application received.</strong> Alex will reach
+          out within one business day to walk you through onboarding and process the $100.
         </div>
       )}
     </div>
-  );
-}
-
-function Grain() {
-  return (
-    <div
-      aria-hidden
-      style={{
-        position: "fixed",
-        inset: 0,
-        pointerEvents: "none",
-        opacity: 0.04,
-        mixBlendMode: "overlay",
-        zIndex: 1,
-        backgroundImage:
-          "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>\")",
-      }}
-    />
   );
 }
