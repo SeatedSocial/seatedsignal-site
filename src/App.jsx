@@ -93,16 +93,16 @@ const FAQ = ({ q, a }) => {
   );
 };
 
-const PricingCard = ({ tier, price, fleet, features, popular, onTrial }) => (
-  <div style={{ background: C.mid, border: popular ? `2px solid ${C.pink}` : `1px solid ${C.light}`, borderRadius: 16, overflow: "hidden", transition: "all 0.3s", boxShadow: popular ? `0 0 40px ${C.glow}` : "none" }}>
+const PricingCard = ({ tier, price, fleet, features, popular, onTrial, customCta, customCtaLabel, priceSuffix }) => (
+  <div style={{ background: C.mid, border: popular ? `2px solid ${C.pink}` : `1px solid ${C.light}`, borderRadius: 16, overflow: "hidden", transition: "all 0.3s", height: "100%", display: "flex", flexDirection: "column" }}>
     {popular && (
       <div style={{ background: C.pink, textAlign: "center", padding: "6px 0", fontFamily: "'DM Mono', monospace", fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: "#fff" }}>Most Popular</div>
     )}
-    <div style={{ padding: "28px 24px" }}>
+    <div style={{ padding: "24px 18px", flex: 1, display: "flex", flexDirection: "column" }}>
       <div style={{ fontSize: 14, fontWeight: 600, color: C.pink, fontFamily: "'DM Mono', monospace", letterSpacing: 1, textTransform: "uppercase", marginBottom: 8 }}>{tier}</div>
       <div style={{ display: "flex", alignItems: "baseline", gap: 4, marginBottom: 4 }}>
-        <span style={{ fontSize: 44, fontWeight: 800, color: C.white }}>${price}</span>
-        <span style={{ fontSize: 14, color: C.muted }}>/mo</span>
+        <span style={{ fontSize: 36, fontWeight: 800, color: C.white, lineHeight: 1.1 }}>{price === "Custom" ? "Custom" : `$${price}`}</span>
+        {price !== "Custom" && <span style={{ fontSize: 14, color: C.muted }}>{priceSuffix || "/mo"}</span>}
       </div>
       <div style={{ fontSize: 12, color: C.muted, marginBottom: 20 }}>{fleet}</div>
       <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 24 }}>
@@ -113,7 +113,7 @@ const PricingCard = ({ tier, price, fleet, features, popular, onTrial }) => (
           </div>
         ))}
       </div>
-      <Btn variant={popular ? "pink" : "outline"} onClick={onTrial} style={{ width: "100%", padding: "12px" }}>Start Free Trial</Btn>
+      <Btn variant={popular ? "pink" : "outline"} onClick={customCta || onTrial} style={{ width: "100%", padding: "12px", marginTop: "auto" }}>{customCtaLabel || "Start Free Trial"}</Btn>
     </div>
   </div>
 );
@@ -434,7 +434,7 @@ const HomePage = ({ setPage }) => (
       <div style={{ background: C.navy, border: `1px solid rgba(255,0,204,0.2)`, borderRadius: 14, padding: "24px 28px", display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
         <div style={{ flex: 1, minWidth: 260 }}>
           <div style={{ fontSize: 15, fontWeight: 700, color: C.white, marginBottom: 6 }}>If Signal retains 2 at-risk drivers per month...</div>
-          <div style={{ fontSize: 14, color: C.muted, fontWeight: 300, lineHeight: 1.6 }}>That's $17,000 in replacement costs saved. Signal's Starter plan is $997/month. The math writes itself.</div>
+          <div style={{ fontSize: 14, color: C.muted, fontWeight: 300, lineHeight: 1.6 }}>That's $17,000 in replacement costs saved. Signal's Starter plan is $997/month for up to 50 drivers. The math writes itself.</div>
         </div>
         <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 44, fontWeight: 500, color: C.pink, flexShrink: 0 }}>17x</div>
       </div>
@@ -461,10 +461,12 @@ const PricingPage = ({ setPage }) => (
     </Section>
 
     <Section style={{ paddingTop: 20 }}>
-      <div className="ss-pricing-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20, marginBottom: 48 }}>
-        <PricingCard tier="Starter" price="997" fleet="10-50 trucks" onTrial={() => setPage("trial")} features={["All three Signal modules", "Fleet Health Heatmap", "AI sentiment scoring", "Basic dashboard", "Email support", "Monthly reporting"]} />
-        <PricingCard tier="Growth" price="2,997" fleet="51-200 trucks" popular onTrial={() => setPage("trial")} features={["Everything in Starter", "Full retention risk scoring", "Driver activity timeline", "Slack/email alerts", "Dedicated account manager", "Weekly reporting", "In-product ROI card"]} />
-        <PricingCard tier="Scale" price="4,497" fleet="201-500 trucks" onTrial={() => setPage("trial")} features={["Everything in Growth", "Custom messaging per terminal", "Multi-location segmentation", "Referral attribution tracking", "Executive reporting suite", "Priority support"]} />
+      <div className="ss-pricing-grid" style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 16, marginBottom: 48, alignItems: "stretch" }}>
+        <PricingCard tier="Starter" price="997" fleet="10-50 drivers" onTrial={() => setPage("trial")} features={["All three Signal modules", "Fleet Health Heatmap", "AI sentiment scoring", "Driver inbox", "Monthly reporting", "Email support"]} />
+        <PricingCard tier="Mid" price="1,997" fleet="51-125 drivers" onTrial={() => setPage("trial")} features={["Everything in Starter, plus:", "Driver activity timeline", "In-product ROI card", "Email + SMS digest alerts"]} />
+        <PricingCard tier="Growth" price="2,997" fleet="126-250 drivers" popular onTrial={() => setPage("trial")} features={["Everything in Mid, plus:", "Full retention risk scoring", "Slack and email alerts", "Dedicated account manager", "Weekly reporting"]} />
+        <PricingCard tier="Scale" price="4,497" fleet="251-500 drivers" onTrial={() => setPage("trial")} features={["Everything in Growth, plus:", "Custom messaging per terminal", "Multi-location segmentation", "Referral attribution tracking", "Executive reporting suite", "Priority support"]} />
+        <PricingCard tier="Enterprise" price="Custom" fleet="500+ drivers" customCta={() => window.open("https://calendly.com/seated-social/signal-demo", "_blank")} customCtaLabel="Talk to us" features={["Everything in Scale, plus:", "Custom integrations", "White-glove onboarding", "Dedicated success team", "Custom SLAs", "Volume pricing"]} />
       </div>
 
       {/* Trial Banner */}
@@ -606,7 +608,7 @@ const TrialPage = ({ setPage }) => {
                 <FormField label="Phone *" placeholder="(208) 555-1234" type="tel" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} mono />
               </div>
               <div className="ss-form-2col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-                <FormField label="Fleet Size" options={["10-50", "51-200", "201-500"]} value={form.fleet} onChange={e => setForm({ ...form, fleet: e.target.value })} />
+                <FormField label="Driver count" options={["10-50", "51-125", "126-250", "251-500", "500+"]} value={form.fleet} onChange={e => setForm({ ...form, fleet: e.target.value })} />
                 <FormField label="Current ATS" options={["TenStreet", "Other", "None"]} value={form.ats} onChange={e => setForm({ ...form, ats: e.target.value })} />
               </div>
               {error && <div style={{ color: C.red, fontSize: 13, marginBottom: 12 }}>{error}</div>}
@@ -711,7 +713,7 @@ const PlaybookPage = ({ setPage }) => {
               <FormField label="Full Name *" placeholder="Mike Carson" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
               <FormField label="Email *" placeholder="mike@company.com" type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
               <FormField label="Company" placeholder="R&R Transportation" value={form.company} onChange={e => setForm({ ...form, company: e.target.value })} />
-              <FormField label="Fleet Size" options={["Under 10", "10-50", "51-200", "201-500", "500+"]} value={form.fleet} onChange={e => setForm({ ...form, fleet: e.target.value })} />
+              <FormField label="Driver count" options={["Under 10", "10-50", "51-125", "126-250", "251-500", "500+"]} value={form.fleet} onChange={e => setForm({ ...form, fleet: e.target.value })} />
               <Btn onClick={handleSubmit} style={{ width: "100%", padding: "16px", fontSize: 16, marginTop: 4 }} disabled={submitting}>
                 {submitting ? "Sending..." : "Send Me the Playbook"}
               </Btn>
@@ -766,6 +768,9 @@ export default function SeatedSignalSite() {
           .ss-family-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
           .ss-included-grid { grid-template-columns: 1fr !important; }
           .ss-form-2col { grid-template-columns: 1fr !important; }
+        }
+        @media (min-width: 769px) and (max-width: 1199px) {
+          .ss-pricing-grid { grid-template-columns: repeat(3, 1fr) !important; }
         }
         @media (min-width: 769px) {
           .ss-mobile-dropdown { display: none !important; }
