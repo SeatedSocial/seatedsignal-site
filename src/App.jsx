@@ -93,7 +93,7 @@ const FAQ = ({ q, a }) => {
   );
 };
 
-const PricingCard = ({ tier, price, fleet, features, popular, onTrial, customCta, customCtaLabel, priceSuffix }) => (
+const PricingCard = ({ tier, price, fleet, features, popular, onTrial, customCta, customCtaLabel, priceSuffix, stripeUrl }) => (
   <div style={{ background: C.mid, border: popular ? `2px solid ${C.pink}` : `1px solid ${C.light}`, borderRadius: 16, overflow: "hidden", transition: "all 0.3s", height: "100%", display: "flex", flexDirection: "column" }}>
     {popular && (
       <div style={{ background: C.pink, textAlign: "center", padding: "6px 0", fontFamily: "'DM Mono', monospace", fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: "#fff" }}>Most Popular</div>
@@ -114,6 +114,9 @@ const PricingCard = ({ tier, price, fleet, features, popular, onTrial, customCta
         ))}
       </div>
       <Btn variant={popular ? "pink" : "outline"} onClick={customCta || onTrial} style={{ width: "100%", padding: "12px", marginTop: "auto" }}>{customCtaLabel || "Start Free Trial"}</Btn>
+      {stripeUrl && (
+        <a href={stripeUrl} target="_blank" rel="noopener noreferrer" style={{ display: "block", textAlign: "center", marginTop: "8px", fontSize: "13px", color: "#94A3B8", textDecoration: "none" }}>Or buy now &rarr;</a>
+      )}
     </div>
   </div>
 );
@@ -462,10 +465,10 @@ const PricingPage = ({ setPage }) => (
 
     <Section style={{ paddingTop: 20 }}>
       <div className="ss-pricing-grid" style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 16, marginBottom: 48, alignItems: "stretch" }}>
-        <PricingCard tier="Starter" price="997" fleet="10-50 drivers" onTrial={() => setPage("trial")} features={["All three Signal modules", "Fleet Health Heatmap", "AI sentiment scoring", "Driver inbox", "Monthly reporting", "Email support"]} />
-        <PricingCard tier="Mid" price="1,997" fleet="51-125 drivers" onTrial={() => setPage("trial")} features={["Everything in Starter, plus:", "Driver activity timeline", "In-product ROI card", "Email + SMS digest alerts"]} />
-        <PricingCard tier="Growth" price="2,997" fleet="126-250 drivers" popular onTrial={() => setPage("trial")} features={["Everything in Mid, plus:", "Full retention risk scoring", "Real-time email alerts", "Weekly reporting"]} />
-        <PricingCard tier="Scale" price="4,497" fleet="251-500 drivers" onTrial={() => setPage("trial")} features={["Everything in Growth, plus:", "Custom messaging per terminal", "Multi-location segmentation", "Referral attribution tracking", "Executive reporting suite", "Priority support"]} />
+        <PricingCard tier="Starter" price="997" stripeUrl="https://buy.stripe.com/eVq9AT0EIbepfdJaOY2Nq00" fleet="10-50 drivers" onTrial={() => setPage("trial")} features={["All three Signal modules", "Fleet Health Heatmap", "AI sentiment scoring", "Driver inbox", "Monthly reporting", "Email support"]} />
+        <PricingCard tier="Mid" price="1,997" stripeUrl="https://buy.stripe.com/cNi8wP4UY96h5D90ak2Nq03" fleet="51-125 drivers" onTrial={() => setPage("trial")} features={["Everything in Starter, plus:", "Driver activity timeline", "In-product ROI card", "Email + SMS digest alerts"]} />
+        <PricingCard tier="Growth" price="2,997" stripeUrl="https://buy.stripe.com/3cI00j3QUaal0iP4qA2Nq02" fleet="126-250 drivers" popular onTrial={() => setPage("trial")} features={["Everything in Mid, plus:", "Full retention risk scoring", "Real-time email alerts", "Weekly reporting"]} />
+        <PricingCard tier="Scale" price="4,497" stripeUrl="https://buy.stripe.com/dRm4gz87a82d1mTg9i2Nq01" fleet="251-500 drivers" onTrial={() => setPage("trial")} features={["Everything in Growth, plus:", "Custom messaging per terminal", "Multi-location segmentation", "Referral attribution tracking", "Executive reporting suite", "Priority support"]} />
         <PricingCard tier="Enterprise" price="Custom" fleet="500+ drivers" customCta={() => window.open("https://calendly.com/seated-social/signal-demo", "_blank")} customCtaLabel="Talk to us" features={["Everything in Scale, plus:", "Custom integrations", "White-glove onboarding", "Dedicated success team", "Custom SLAs", "Volume pricing"]} />
       </div>
 
