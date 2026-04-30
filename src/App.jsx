@@ -1,5 +1,6 @@
 import { useState } from "react"
 import UConnectLanding from "./pages/UConnect"
+import SmsConsent from "./pages/SmsConsent"
 
 // ============================================================
 // BRAND TOKENS
@@ -740,7 +741,11 @@ const PlaybookPage = ({ setPage }) => {
 // APP
 // ============================================================
 export default function SeatedSignalSite() {
-  const initialPage = typeof window !== "undefined" && window.location.pathname === "/uconnect" ? "uconnect" : "home";
+  const initialPage = typeof window !== "undefined"
+    ? (window.location.pathname === "/uconnect" ? "uconnect"
+      : window.location.pathname === "/sms-consent" ? "sms-consent"
+      : "home")
+    : "home";
   const [page, setPage] = useState(initialPage);
 
   const navigate = (p) => {
@@ -749,6 +754,7 @@ export default function SeatedSignalSite() {
   };
 
   if (page === "uconnect") return <UConnectLanding />;
+  if (page === "sms-consent") return <SmsConsent />;
 
   return (
     <div style={{ background: C.navy, fontFamily: "'Outfit', sans-serif", color: C.white, minHeight: "100vh" }}>
