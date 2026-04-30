@@ -43,7 +43,7 @@ export default function SmsConsent() {
         <div style={styles.consentBox}>
           <div style={styles.consentLabel}>SIGNED BY DRIVER AT ONBOARDING</div>
           <div style={styles.consentText}>
-            &ldquo;By signing below, I consent to receive text messages from [Carrier Name] sent via the Seated Signal driver retention platform. Messages may include onboarding check-ins, company updates, dispatcher communications, recognition, and retention surveys. Message frequency varies, typically 4-10 messages per month. Message and data rates may apply. Reply STOP at any time to unsubscribe. Reply HELP for help. No mobile information will be shared with third parties or affiliates for marketing or promotional purposes. Privacy policy: seatedsocial.com/privacy-policy.&rdquo;
+            &ldquo;By signing below, I consent to receive text messages from [Carrier Name] sent via the Seated Signal driver retention platform. Messages may include onboarding check-ins, company updates, dispatcher communications, recognition, and retention surveys. Message frequency varies, typically 4-12 messages per month. Message and data rates may apply. Reply STOP at any time to unsubscribe. Reply HELP for help. No mobile information will be shared with third parties or affiliates for marketing or promotional purposes. Privacy policy: seatedsocial.com/privacy-policy.&rdquo;
           </div>
         </div>
 
@@ -58,7 +58,7 @@ export default function SmsConsent() {
 
         <h2 style={styles.h2}>Frequency</h2>
         <p style={styles.p}>
-          Message frequency varies by carrier program and the driver&apos;s stage in their First 90 Days sequence. Typical volume is 4 to 10 messages per month. Message and data rates may apply.
+          Message frequency varies by carrier program and the driver&apos;s stage in their First 90 Days sequence. Typical volume is 4 to 12 messages per month. Message and data rates may apply.
         </p>
 
         <h2 style={styles.h2}>How to opt out or get help</h2>
