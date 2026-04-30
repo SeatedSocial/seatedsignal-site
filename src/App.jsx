@@ -201,7 +201,7 @@ const Footer = ({ setPage }) => (
           ))}
         </div>
       </div>
-      <div className="ss-footer-grid" style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: 40, marginBottom: 40 }}>
+      <div className="ss-footer-grid" style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 40, marginBottom: 40 }}>
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
             <SignalIcon s={22} />
@@ -220,6 +220,13 @@ const Footer = ({ setPage }) => (
           <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: C.pink, marginBottom: 14 }}>Contact</div>
           <div style={{ fontSize: 13, color: C.muted, marginBottom: 8 }}>alex@seated-social.com</div>
           <div style={{ fontSize: 13, color: C.muted, marginBottom: 8 }}>Seated Social LLC</div>
+        </div>
+        <div>
+          <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: C.pink, marginBottom: 14 }}>Legal</div>
+          <a href="https://seatedsocial.com/privacy-policy" target="_blank" rel="noopener noreferrer" style={{ display: "block", fontSize: 13, color: C.muted, marginBottom: 8, textDecoration: "none" }}>Privacy Policy</a>
+          <a href="https://seatedsocial.com/terms-of-service" target="_blank" rel="noopener noreferrer" style={{ display: "block", fontSize: 13, color: C.muted, marginBottom: 8, textDecoration: "none" }}>Terms of Service</a>
+          <a href="https://seatedsocial.com/disclaimers" target="_blank" rel="noopener noreferrer" style={{ display: "block", fontSize: 13, color: C.muted, marginBottom: 8, textDecoration: "none" }}>Disclaimers</a>
+          <a href="/sms-consent" style={{ display: "block", fontSize: 13, color: C.muted, marginBottom: 8, textDecoration: "none" }}>SMS Consent</a>
         </div>
       </div>
       <div style={{ borderTop: `1px solid ${C.light}`, paddingTop: 20, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
