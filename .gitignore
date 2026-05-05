@@ -7,3 +7,7 @@ dist
 # Backup files
 *.bak-*
 *.backup-*
+
+# Backup files
+*.bak-*
+*.backup-*
