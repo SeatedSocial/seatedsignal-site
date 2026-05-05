@@ -198,6 +198,57 @@ export default function UConnectLanding() {
         </div>
       </section>
 
+      {/* VIDEO */}
+      <section className="uc-section" style={{ padding: "80px 32px" }}>
+        <div className="uc-section-narrow" style={{ textAlign: "center" }}>
+          <Eyebrow text="90 SECONDS / WHAT SIGNAL IS" />
+          <h2 className="uc-h2" style={{ marginTop: 12 }}>
+            The shortest path to <span style={{ color: C.pink }}>understanding Signal.</span>
+          </h2>
+          <div
+            style={{
+              position: "relative",
+              width: "100%",
+              paddingBottom: "56.25%",
+              marginTop: 32,
+              borderRadius: 16,
+              overflow: "hidden",
+              cursor: "pointer",
+              background: "#000",
+              boxShadow: "0 24px 48px rgba(0,0,0,0.4)",
+            }}
+            onClick={(e) => {
+              const iframe = document.createElement("iframe");
+              iframe.src = "https://www.youtube-nocookie.com/embed/g11F9dUZMZU?autoplay=1&rel=0&modestbranding=1";
+              iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+              iframe.allowFullscreen = true;
+              iframe.style.cssText = "position:absolute;inset:0;width:100%;height:100%;border:0;";
+              e.currentTarget.innerHTML = "";
+              e.currentTarget.appendChild(iframe);
+            }}
+          >
+            <img
+              src="https://i.ytimg.com/vi/g11F9dUZMZU/maxresdefault.jpg"
+              alt="Watch the Seated Signal explainer"
+              loading="lazy"
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+            />
+            <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.25)" }} />
+            <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <div style={{
+                width: 88, height: 88, borderRadius: "50%",
+                background: C.pink, display: "flex", alignItems: "center", justifyContent: "center",
+                boxShadow: "0 12px 32px rgba(0,0,0,0.5)",
+              }}>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill={C.ink} style={{ marginLeft: 4 }}>
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* STAT BAND */}
       <section className="uc-section" style={{ background: C.inkMid, borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.line}`, padding: "56px 32px" }}>
         <div className="uc-section-wide">
