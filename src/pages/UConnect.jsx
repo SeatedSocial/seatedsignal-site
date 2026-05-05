@@ -352,7 +352,7 @@ export default function UConnectLanding() {
         <div className="uc-section-wide">
           <Eyebrow text="WHAT'S INSIDE" />
           <h2 className="uc-h2" style={{ maxWidth: 760 }}>
-            Forty-eight pages. Nine touchpoints. <span style={{ color: C.pink }}>Zero filler.</span>
+            Nine touchpoints. <span style={{ color: C.pink }}>Zero filler.</span>
           </h2>
 
           <div className="uc-chapter-grid">
@@ -469,7 +469,7 @@ export default function UConnectLanding() {
           <div style={{ marginTop: 40 }}>
             {[
               { q: "Is the Playbook actually free?",
-                a: "Yes. No card, no trial, no autoplay video sales pitch. You give us your email, we send you a forty-eight page PDF. The trial is opt-in on a separate checkbox." },
+                a: "Yes. No card, no trial, no autoplay video sales pitch. You give us your email, we send you the playbook PDF. The trial is opt-in on a separate checkbox." },
               { q: "What happens after the 30-day trial?",
                 a: "Nothing automatic. We talk on day 28. If Signal earned its keep you pick a tier. If not, we shut it down clean and you keep the data export." },
               { q: "What if we already use TenStreet?",
