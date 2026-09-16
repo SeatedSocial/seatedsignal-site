@@ -143,6 +143,7 @@ p.small { font-size: 14px; }
 .nav .links { display: flex; align-items: center; gap: 32px; }
 .nav .links a { font-size: 14.5px; font-weight: 500; color: var(--slate); transition: color .15s; }
 .nav .links a:hover, .nav .links a.active { color: var(--white); }
+.nav .links a.btn, .nav .links a.btn:hover { color: #fff; }
 .nav .burger { display: none; width: 40px; height: 40px; flex-direction: column; align-items: center; justify-content: center; }
 .nav .burger span { display: block; width: 20px; height: 2px; background: var(--white); margin: 3px 0; border-radius: 2px; }
 .nav .drawer { display: none; border-top: 1px solid var(--line); background: var(--navy); padding: 12px var(--gutter) 20px; }
