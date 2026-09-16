@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="100" viewBox="0 0 200 100" role="img" aria-label="Seated Signal mark">
+  <title>Seated Signal mark</title>
+  <defs>
+    <linearGradient id="signalGradient" x1="0%" y1="0%" x2="100%" y2="0%" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#FF00CC"/>
+      <stop offset="100%" stop-color="#A848FF"/>
+    </linearGradient>
+  </defs>
+  <path d="M 20 50 L 70 50 L 80 35 L 90 80 L 100 20 L 110 80 L 120 35 L 130 50 L 180 50" stroke="url(#signalGradient)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>
