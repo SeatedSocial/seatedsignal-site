@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, createContext, useContext } from "react"
+import { startScroll, scrollToTop, scrollToId } from "../motion"
 
 export const CALENDLY = "https://calendly.com/seated-social/30min"
 export const CONTACT_EMAIL = "alex@seatedsignal.com"
@@ -13,6 +14,7 @@ export function useRoute() { return useContext(RouteCtx) }
 export function Router({ children }) {
   const [path, setPath] = useState(() => (typeof window === "undefined" ? "/" : normalize(window.location.pathname)))
   useEffect(() => {
+    startScroll()
     const onPop = () => setPath(normalize(window.location.pathname))
     window.addEventListener("popstate", onPop)
     return () => window.removeEventListener("popstate", onPop)
@@ -26,9 +28,9 @@ export function Router({ children }) {
       setPath(next)
     }
     if (hash) {
-      requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView({ behavior: "smooth", block: "start" }))
+      setTimeout(() => scrollToId(hash), next !== path ? 120 : 0)
     } else {
-      window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" })
+      scrollToTop(true)
     }
   }
   return <RouteCtx.Provider value={{ path, go }}>{children}</RouteCtx.Provider>
@@ -120,6 +122,7 @@ export function Nav() {
   useEffect(() => { setOpen(false) }, [path])
   return (
     <nav className={`nav ${open ? "open" : ""}`}>
+      <div className="progress" aria-hidden="true" />
       <div className="container">
         <Link to="/" className="logo" aria-label="Seated Signal home"><img src="/brand/lockup-dark.svg" alt="Seated Signal" width="240" height="27" /></Link>
         <div className="links">

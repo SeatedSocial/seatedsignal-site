@@ -1,4 +1,5 @@
 import { Reveal, Thread, CtaBand } from "../components/ui"
+import { useFx, gsap, parallax, rise, wordReveal } from "../motion"
 
 // Illustrative conversations. Names are fictional.
 const T_FIRST90 = [
@@ -44,9 +45,9 @@ function Detail({ eyebrow, title, body, points, note, thread, flip }) {
   )
 }
 
-function Block({ eyebrow, title, items }) {
+function Block({ eyebrow, title, items, light }) {
   return (
-    <section className="section hairline-top">
+    <section className={`section ${light ? "light chapter-block" : "hairline-top"}`}>
       <div className="container">
         <Reveal className="narrow" style={{ marginBottom: 40 }}>
           <div className="eyebrow">{eyebrow}</div>
@@ -61,8 +62,15 @@ function Block({ eyebrow, title, items }) {
 }
 
 export default function Features() {
+  const root = useFx((el) => {
+    const q = gsap.utils.selector(el)
+    gsap.timeline({ defaults: { ease: "power3.out" } })
+      .from(q(".hero .eyebrow, .hero h1, .hero .lede"), { y: 30, opacity: 0, duration: 0.9, stagger: 0.12 })
+    q(".detail .thread").forEach((t) => parallax(t, t.closest(".detail"), -10))
+    q(".detail .msgs").forEach((m) => rise(m.children, { stagger: 0.12, trigger: m }))
+  })
   return (
-    <>
+    <div ref={root}>
       <section className="hero" style={{ paddingBottom: 48 }}>
         <div className="container">
           <div className="eyebrow">Features</div>
@@ -130,6 +138,7 @@ export default function Features() {
       />
 
       <Block
+        light
         eyebrow="Listening and routing"
         title="Every reply is read. The ones that matter reach a person."
         items={[
@@ -172,6 +181,6 @@ export default function Features() {
         title="See it running on your own drivers."
         body="Fourteen days free on any plan. We set it up, you approve the messages, the first texts go out the same week."
       />
-    </>
+    </div>
   )
 }

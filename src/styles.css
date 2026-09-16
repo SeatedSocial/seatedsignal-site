@@ -387,3 +387,90 @@ p.small { font-size: 14px; }
   .btn { height: 48px; padding: 0 22px; }
   .hero .actions .btn { width: 100%; justify-content: center; }
 }
+
+/* =========================================================================
+   Motion layer: scenes, chapters, horizontal track, stacked cards
+   ========================================================================= */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+.nav .progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; background: var(--grad); transform: scaleX(0); transform-origin: left center; }
+
+.orb { position: absolute; border-radius: 50%; filter: blur(70px); pointer-events: none; will-change: transform; }
+.orb-a { width: 620px; height: 620px; right: -160px; top: -200px; background: radial-gradient(circle, rgba(168, 72, 255, 0.28), transparent 65%); }
+.orb-b { width: 420px; height: 420px; left: -140px; bottom: -160px; background: radial-gradient(circle, rgba(255, 0, 204, 0.18), transparent 65%); }
+.orb-c { width: 520px; height: 520px; right: -120px; top: 10%; background: radial-gradient(circle, rgba(255, 0, 204, 0.16), transparent 65%); }
+.orb-d { width: 520px; height: 520px; left: -140px; bottom: -10%; background: radial-gradient(circle, rgba(168, 72, 255, 0.18), transparent 65%); }
+
+/* Hero as a pinned scene */
+.hero.scene { min-height: 100vh; display: flex; align-items: center; padding: 60px 0; }
+.hero.scene::before { display: none; }
+.hero .copy { position: relative; z-index: 1; }
+.scroll-hint { position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); width: 22px; height: 36px; border: 1.5px solid var(--line-strong); border-radius: 12px; }
+.scroll-hint span { position: absolute; left: 50%; top: 7px; width: 3px; height: 7px; margin-left: -1.5px; border-radius: 2px; background: var(--pink); animation: hint 1.6s ease-in-out infinite; }
+@keyframes hint { 0%, 100% { transform: translateY(0); opacity: 1; } 60% { transform: translateY(12px); opacity: 0; } 61% { transform: translateY(0); opacity: 0; } }
+
+/* Light chapters */
+.section.light { background: var(--white); color: var(--navy); position: relative; overflow: hidden; }
+.section.light h1, .section.light h2, .section.light h3, .section.light .statement { color: var(--navy); }
+.section.light p { color: #4B5A70; }
+.section.light .eyebrow { color: var(--pink); }
+.section.light .src { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; color: #8A97AA; margin-top: 6px; }
+.section.light .container { position: relative; }
+.chapter { padding: 140px 0; }
+.statement { font-size: clamp(30px, 4.6vw, 58px); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; max-width: 980px; }
+.statement .w { display: inline; }
+.chapter-facts { margin-top: 64px; padding-top: 40px; border-top: 1px solid rgba(10, 22, 40, 0.1); }
+.chapter-facts .big { font-size: clamp(36px, 4vw, 54px); font-weight: 800; letter-spacing: -0.03em; line-height: 1; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.chapter-facts p { margin-top: 10px; font-size: 15.5px; color: var(--navy); }
+.closer { margin-top: 56px; font-size: clamp(19px, 2vw, 24px); font-weight: 500; color: var(--navy) !important; max-width: 640px; }
+
+/* Horizontal track */
+.hscroll { position: relative; overflow: hidden; background: var(--navy); }
+.hscroll .track { display: flex; height: 100vh; align-items: stretch; will-change: transform; }
+.hscroll .panel { flex: 0 0 min(600px, 80vw); height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 0 56px; border-left: 1px solid var(--line); position: relative; }
+.hscroll .panel.intro { flex-basis: min(760px, 90vw); border-left: 0; padding-left: max(24px, calc((100vw - var(--container)) / 2 + 24px)); }
+.hscroll .panel.intro h2 { font-size: clamp(36px, 5vw, 64px); }
+.hscroll .panel.intro .hint { margin-top: 40px; font-size: 12px; letter-spacing: .2em; color: var(--pink); }
+.hscroll .panel.outro { flex-basis: min(640px, 90vw); padding-right: max(24px, calc((100vw - var(--container)) / 2 + 24px)); }
+.hscroll .panel.outro p { margin: 16px 0 28px; }
+.hscroll .panel .idx { font-size: 13px; letter-spacing: .2em; color: var(--pink); margin-bottom: 20px; }
+.hscroll .panel h3 { font-size: clamp(24px, 2.4vw, 32px); margin-bottom: 12px; }
+.hscroll .panel p { max-width: 440px; }
+.hscroll .mini { margin-top: 32px; padding: 14px; max-width: 420px; box-shadow: none; }
+.hscroll .mini .bubble { font-size: 14px; }
+
+/* Stacked program cards */
+.stack { position: relative; }
+.stack .program { position: sticky; top: 96px; margin-bottom: 28px; padding: 48px; background: var(--navy-mid); border: 1px solid var(--line-strong); will-change: transform; transform-origin: center top; }
+.stack .program:last-child { margin-bottom: 0; }
+.stack .program .grid.split { align-items: center; gap: 48px; }
+.stack .program h3.h2 { font-size: clamp(30px, 3.6vw, 44px); margin-bottom: 14px; }
+.stack .program p { font-size: 16.5px; max-width: 520px; }
+.stack .program .sample { margin-top: 0; display: flex; justify-content: flex-end; }
+.stack .program .sample .bubble { max-width: 380px; font-size: 16px; padding: 16px 20px; }
+.stack .program:hover { transform: none; }
+
+/* Theme bars */
+.qitem .bar { height: 6px; background: rgba(240, 244, 248, 0.08); border-radius: 3px; margin-top: 8px; overflow: hidden; max-width: 320px; }
+.qitem .bar i { display: block; height: 100%; background: var(--grad); border-radius: 3px; }
+
+@media (max-width: 900px) {
+  .hero.scene { min-height: 0; padding: 64px 0 56px; }
+  .scroll-hint { display: none; }
+  .chapter { padding: 88px 0; }
+  .hscroll .track { flex-direction: column; height: auto; }
+  .hscroll .panel { flex-basis: auto; height: auto; padding: 48px var(--gutter); border-left: 0; border-top: 1px solid var(--line); }
+  .hscroll .panel.intro { padding-left: var(--gutter); border-top: 0; padding-top: 72px; }
+  .hscroll .panel.intro .hint { display: none; }
+  .hscroll .panel.outro { padding-right: var(--gutter); padding-bottom: 72px; }
+  .stack .program { position: relative; top: auto; padding: 28px; }
+  .stack .program .sample { justify-content: flex-start; }
+  .orb { filter: blur(50px); }
+}
+
+.section.light .fact { background: #fff; border-color: rgba(10, 22, 40, 0.08); box-shadow: 0 10px 30px rgba(10, 22, 40, 0.05); }
+.section.light .fact h3 { color: var(--navy); }
+.chapter-block { padding: 120px 0; }
