@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Btn, Reveal, postLead, CtaBand } from "../components/ui"
+import { Btn, Reveal, postLead, Honeypot, CtaBand } from "../components/ui"
 
 const GETS = [
   "The touchpoints that matter in a driver's first ninety days, and why those days",
@@ -10,7 +10,7 @@ const GETS = [
 ]
 
 export default function Playbook() {
-  const [form, setForm] = useState({ name: "", email: "", company: "", fleet: "" })
+  const [form, setForm] = useState({ name: "", email: "", company: "", fleet: "", website: "" })
   const [busy, setBusy] = useState(false)
   const [done, setDone] = useState(false)
   const [err, setErr] = useState(null)
@@ -20,8 +20,10 @@ export default function Playbook() {
     e.preventDefault()
     if (!form.name || !form.email) { setErr("Name and email are required."); return }
     setErr(null); setBusy(true)
-    await postLead({ ...form, source: "playbook-download" })
-    setBusy(false); setDone(true)
+    const ok = await postLead({ ...form, source: "playbook-download" })
+    setBusy(false)
+    if (ok || form.website) { setDone(true); return }
+    setErr("That didn't go through. Email alex@seatedsignal.com and we'll send it by hand.")
   }
 
   return (
@@ -64,6 +66,7 @@ export default function Playbook() {
               </div>
             ) : (
               <form onSubmit={submit} noValidate>
+                <Honeypot value={form.website} onChange={set("website")} />
                 <div className="field"><label htmlFor="p-name">Your name</label><input id="p-name" value={form.name} onChange={set("name")} placeholder="Mike Carson" autoComplete="name" /></div>
                 <div className="field"><label htmlFor="p-email">Work email</label><input id="p-email" type="email" value={form.email} onChange={set("email")} placeholder="mike@carrier.com" autoComplete="email" /></div>
                 <div className="field"><label htmlFor="p-co">Carrier</label><input id="p-co" value={form.company} onChange={set("company")} placeholder="Optional" autoComplete="organization" /></div>

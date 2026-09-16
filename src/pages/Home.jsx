@@ -1,6 +1,7 @@
 import { useRef, useState } from "react"
 import { Btn, Link, Thread, CtaBand } from "../components/ui"
 import { useFx, gsap, ScrollTrigger, wordReveal, rise, parallax, countUp, Words } from "../motion"
+import { track } from "../analytics"
 
 // Illustrative conversation. Carrier and driver names are fictional.
 const HERO_THREAD = [
@@ -15,7 +16,7 @@ const HERO_THREAD = [
 const PROOF = [
   { num: "79%", label: "of drivers replied at day 7", src: "Brady Trucking" },
   { num: "71%", label: "replied at day 14", src: "Brady Trucking" },
-  { num: "5", label: "drivers kept who were on their way out, about $42,500", src: "Brady Trucking · $8,234 per driver, ATA" },
+  { num: "5", label: "drivers kept who were on their way out, about $42,500", src: "Brady Trucking, as of Sept 2026 · $8,234 per driver, ATA" },
   { num: "48 hrs", label: "from signed to first text", src: "Live in two days, month to month" },
 ]
 
@@ -118,6 +119,9 @@ export default function Home() {
     rise(q(".works .works-row > *"), { stagger: 0.1, trigger: q(".works")[0] })
     rise(q(".facts .fact"), { stagger: 0.1, trigger: q(".facts")[0] })
     rise(q(".walled .head > *"), { trigger: q(".walled")[0] })
+    rise(q(".founder .copy > *"), { trigger: q(".founder")[0] })
+    rise(q(".founder .portrait"), { y: 40, trigger: q(".founder")[0] })
+    parallax(q(".founder .portrait img"), q(".founder")[0], -6)
 
     return () => mm.revert()
   })
@@ -331,9 +335,30 @@ export default function Home() {
             <h2>Your drivers, your number, your data.</h2>
           </div>
           <div className="facts">
-            <div className="fact"><h3>Your own front door</h3><p>Every carrier gets its own subdomain, its own login, and its own text number. No shared portal.</p></div>
-            <div className="fact"><h3>Scoped to the person</h3><p>A terminal manager sees only their terminal's drivers. Recruiters see what they're assigned.</p></div>
-            <div className="fact"><h3>Nobody else's fleet</h3><p>Nothing about your drivers is visible to any other carrier on Signal. Every query is scoped to you.</p></div>
+            <div className="fact"><h3>Your own front door</h3><p>Every carrier gets its own web address, its own login, and its own text number. No shared portal.</p></div>
+            <div className="fact"><h3>Logins by terminal</h3><p>A terminal manager sees only their terminal's drivers. Recruiters see what they're assigned.</p></div>
+            <div className="fact"><h3>Nobody else's fleet</h3><p>Nothing about your drivers is visible to any other carrier on Signal. Your data lives in your account and nowhere else.</p></div>
+          </div>
+        </div>
+      </section>
+
+      {/* Founder */}
+      <section className="section founder">
+        <div className="container grid split">
+          <div className="portrait">
+            <img src="/brand/alex-carpenter.jpg" alt="Alex Carpenter, founder of Seated Signal" width="480" height="600" loading="lazy" />
+          </div>
+          <div className="copy">
+            <div className="eyebrow">Who's behind it</div>
+            <h2>Built by one person who answers the email.</h2>
+            <p style={{ marginTop: 20 }}>
+              I'm Alex Carpenter. For six years I've run Seated Social, recruiting ads for trucking carriers, more than forty of them. I built Signal because the carriers I was filling seats for kept losing those same drivers at day 30, and nobody had heard from the driver until the truck came back.
+            </p>
+            <p style={{ marginTop: 18 }}>
+              Signal is small on purpose. When a carrier tells me something would make it easier, it's usually fixed the same day, because there's no ticket queue between the person who hears the problem and the person who can change the code. That will grow. The part that won't change is that you can always reach the person who built it.
+            </p>
+            <p style={{ marginTop: 18 }}>Marine Corps veteran. Meridian, Idaho. Still on every setup call.</p>
+            <div className="sig mono">ALEX CARPENTER · FOUNDER, SEATED SOCIAL LLC · <a href="mailto:alex@seatedsignal.com">ALEX@SEATEDSIGNAL.COM</a></div>
           </div>
         </div>
       </section>
@@ -352,7 +377,7 @@ function VideoCard() {
   const toggle = () => {
     const v = ref.current
     if (!v) return
-    if (v.paused) { v.play(); setPlaying(true) } else { v.pause(); setPlaying(false) }
+    if (v.paused) { v.play(); setPlaying(true); if (!v.dataset.tracked) { v.dataset.tracked = "1"; track("video_played", { video: "radell-day30" }) } } else { v.pause(); setPlaying(false) }
   }
   return (
     <div className="phone">

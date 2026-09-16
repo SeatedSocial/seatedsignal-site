@@ -13,7 +13,7 @@ const FLOW = [
 const STEPS = [
   ["01", "A lead comes in", "Exclusive Seated Social leads land in your Double Nickel pipeline the moment they arrive, with the campaign and creative attached. Your recruiters call while the driver is still interested, not three days later."],
   ["02", "A recruiter marks the driver hired", "That's the whole action. Nothing else to click, nothing to export."],
-  ["03", "Signal takes it from there", "The driver is created in your Signal tenant, First 90 starts on their hire date, and the Day 1 check-in is scheduled. No spreadsheet. No \"did anyone add the new guys to the list?\""],
+  ["03", "Signal takes it from there", "The driver shows up in your Signal account, First 90 starts on their hire date, and the Day 1 check-in is scheduled. No spreadsheet. No \"did anyone add the new guys to the list?\""],
   ["04", "One line you can trace", "Lead source, hire, day 90. The campaign that found the driver stays attached the whole way, so recruiting and retention are finally reading from the same page."],
 ]
 
@@ -86,10 +86,10 @@ export default function DoubleNickel() {
             <div className="eyebrow">Already on Double Nickel?</div>
             <h2>Setup is on our side.</h2>
             <p style={{ marginTop: 20 }}>
-              The handoff is a webhook from your Double Nickel account to your Signal tenant. We connect it. You approve your First 90 messages, and from then on every new hire enrolls without anyone touching a list.
+              Double Nickel tells Signal the moment a driver is marked hired. We set up the connection; there is nothing for you to install. You approve your First 90 messages, and from then on every new hire enrolls without anyone touching a list.
             </p>
             <p style={{ marginTop: 18 }}>
-              Quiet hours, scoped users and everything else in Signal apply to drivers who arrive this way, same as any other. Built, tested, first carriers coming online now.
+              Quiet hours, terminal logins and everything else in Signal apply to drivers who arrive this way, same as any other. Built, tested, first carriers coming online now.
             </p>
           </Reveal>
           <Reveal delay={120}>

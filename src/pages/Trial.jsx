@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { Btn, Reveal, FAQ, postLead, CALENDLY } from "../components/ui"
+import { Btn, Reveal, FAQ, postLead, Honeypot, CALENDLY } from "../components/ui"
 
 const INCLUDED = [
   "All four programs, written in your voice and approved by you",
-  "Your own text number, subdomain and login",
+  "Your own text number, web address and login",
   "Sentiment scoring, flags and the Today queue",
   "Driver Inbox with the full thread per driver",
   "Roster import from a spreadsheet or your ATS",
@@ -19,7 +19,7 @@ const STEPS = [
 ]
 
 export default function Trial() {
-  const [form, setForm] = useState({ name: "", company: "", email: "", phone: "", fleet: "", ats: "" })
+  const [form, setForm] = useState({ name: "", company: "", email: "", phone: "", fleet: "", ats: "", website: "" })
   const [busy, setBusy] = useState(false)
   const [done, setDone] = useState(false)
   const [err, setErr] = useState(null)
@@ -29,8 +29,10 @@ export default function Trial() {
     e.preventDefault()
     if (!form.name || !form.company || !form.email || !form.phone) { setErr("Name, company, email and phone are required."); return }
     setErr(null); setBusy(true)
-    await postLead({ ...form, source: "seatedsignal-trial" })
-    setBusy(false); setDone(true)
+    const ok = await postLead({ ...form, source: "seatedsignal-trial" })
+    setBusy(false)
+    if (ok || form.website) { setDone(true); return }
+    setErr("That didn't go through. Email alex@seatedsignal.com and we'll get you set up by hand.")
   }
 
   return (
@@ -55,6 +57,7 @@ export default function Trial() {
                 </div>
               ) : (
                 <form onSubmit={submit} noValidate>
+                  <Honeypot value={form.website} onChange={set("website")} />
                   <div className="two">
                     <div className="field"><label htmlFor="t-name">Your name</label><input id="t-name" value={form.name} onChange={set("name")} placeholder="Mike Carson" autoComplete="name" /></div>
                     <div className="field"><label htmlFor="t-co">Carrier</label><input id="t-co" value={form.company} onChange={set("company")} placeholder="Northfork Carriers" autoComplete="organization" /></div>
@@ -75,6 +78,7 @@ export default function Trial() {
                   </div>
                   {err && <div className="error">{err}</div>}
                   <Btn type="submit" block disabled={busy} arrow>{busy ? "Sending" : "Start my free trial"}</Btn>
+                  <p className="consent">By submitting, you agree that Seated Social may call, email or text you about your trial. Message and data rates may apply. Reply STOP to any text to opt out. <a href="https://seatedsocial.com/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy policy</a>.</p>
                   <div className="fine">NO CARD. NO CONTRACT. WE REPLY WITHIN ONE BUSINESS DAY.</div>
                 </form>
               )}
@@ -97,7 +101,7 @@ export default function Trial() {
         <div className="container">
           <Reveal className="narrow" style={{ marginBottom: 36 }}>
             <div className="eyebrow">Included</div>
-            <h2>The whole product, not a demo tenant.</h2>
+            <h2>The whole product, not a demo.</h2>
           </Reveal>
           <div className="facts">
             {INCLUDED.map((t, i) => <Reveal key={t} className="fact" delay={i * 50}><p style={{ color: "var(--white)", fontSize: 15.5 }}>{t}</p></Reveal>)}

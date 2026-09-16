@@ -4,7 +4,7 @@ const TIERS = [
   {
     name: "Starter", price: "997", fleet: "10 to 50 drivers",
     stripe: "https://buy.stripe.com/eVq9AT0EIbepfdJaOY2Nq00",
-    features: ["All four programs: First 90, Mile Marker and Inside the Cab, Last 90, Moments", "Your own number, subdomain and login", "Sentiment scoring, flags and the Today queue", "Driver Inbox and driver timeline", "Monday Minute and the weekly email", "Email support"],
+    features: ["All four programs: First 90, Mile Marker and Inside the Cab, Last 90, Moments", "Your own number, web address and login", "Sentiment scoring, flags and the Today queue", "Driver Inbox and driver timeline", "Monday Minute and the weekly email", "Email support"],
   },
   {
     name: "Mid", price: "1,997", fleet: "51 to 125 drivers",
@@ -14,7 +14,7 @@ const TIERS = [
   {
     name: "Growth", price: "2,997", fleet: "126 to 250 drivers", popular: true,
     stripe: "https://buy.stripe.com/3cI00j3QUaal0iP4qA2Nq02",
-    features: ["Everything in Mid, plus:", "Scoped users per terminal", "Roster sync by webhook from your ATS", "Inbox export"],
+    features: ["Everything in Mid, plus:", "Logins by terminal: managers see only their own drivers", "New hires flow in from your ATS automatically", "Inbox export"],
   },
   {
     name: "Scale", price: "4,497", fleet: "251 to 500 drivers",
@@ -30,7 +30,7 @@ const TIERS = [
 const FAQS = [
   ["How long does setup take?", "Most carriers are live within 48 hours. You send us a roster or connect your ATS, we draft your programs in your voice, you approve them, and the first texts go out."],
   ["Do my drivers need an app?", "No. Everything runs over normal text messages. Drivers reply the way they reply to anyone else. No login, no download."],
-  ["Does it connect to our ATS?", "Yes. Rosters come in by spreadsheet or by a webhook from your ATS or onboarding system, so new hires enroll without anyone uploading anything. Ask us about yours."],
+  ["Does it connect to our ATS?", "Yes. Rosters come in by spreadsheet, or your ATS or onboarding system sends new hires to Signal automatically, so nobody uploads anything. Ask us about yours."],
   ["Does anything send without a person seeing it?", "Programs you have approved run on their schedule. Anything Signal drafts on its own, a follow-up question or a Moments text, waits for a person to approve it. Sentiment scoring never sends; it opens a flag."],
   ["What if a driver opts out?", "They reply STOP and they're out, immediately, from every program. Opt-outs show up in your deliverability panel."],
   ["Can we change the messages?", "Every template is yours. Edit any program in Settings with a live preview. We write the first draft, you own it from there."],

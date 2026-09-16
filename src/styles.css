@@ -515,3 +515,13 @@ html.lenis, html.lenis body { height: auto; }
   .partners .plus { display: none; }
   .partners { gap: 18px; }
 }
+
+.form .consent { margin-top: 14px; font-size: 12px; line-height: 1.55; color: var(--muted); }
+.form .consent a { color: var(--slate); border-bottom: 1px solid var(--line-strong); }
+
+/* Founder */
+.founder .portrait { position: relative; max-width: 420px; margin: 0 auto; border-radius: 22px; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5); }
+.founder .portrait::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(10, 22, 40, 0.55)); pointer-events: none; }
+.founder .portrait img { width: 100%; height: auto; display: block; transform: scale(1.06); }
+.founder .sig { margin-top: 26px; font-size: 11px; letter-spacing: .14em; color: var(--slate); line-height: 1.8; }
+.founder .sig a { color: var(--pink); }

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, createContext, useContext } from "react"
 import { startScroll, scrollToTop, scrollToId } from "../motion"
+import { startAnalytics, pageview, track } from "../analytics"
 
-export const CALENDLY = "https://calendly.com/seated-social/30min"
+export const CALENDLY = "https://calendly.com/seated-social/signal-demo"
 export const CONTACT_EMAIL = "alex@seatedsignal.com"
 
 // ---------------------------------------------------------------------------
@@ -15,6 +16,7 @@ export function Router({ children }) {
   const [path, setPath] = useState(() => (typeof window === "undefined" ? "/" : normalize(window.location.pathname)))
   useEffect(() => {
     startScroll()
+    startAnalytics().then(() => pageview(window.location.pathname))
     const onPop = () => setPath(normalize(window.location.pathname))
     window.addEventListener("popstate", onPop)
     return () => window.removeEventListener("popstate", onPop)
@@ -26,6 +28,7 @@ export function Router({ children }) {
     if (next !== path) {
       window.history.pushState({}, "", next + (hash ? "#" + hash : ""))
       setPath(next)
+      pageview(next)
     }
     if (hash) {
       setTimeout(() => scrollToId(hash), next !== path ? 120 : 0)
@@ -45,7 +48,14 @@ function normalize(p) {
 export function Link({ to, className, children, ...rest }) {
   const { go, path } = useRoute()
   const external = to.startsWith("http") || to.startsWith("mailto:")
-  if (external) return <a href={to} target={to.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className={className} {...rest}>{children}</a>
+  if (external) {
+    const onClick = () => {
+      if (to.includes("calendly.com")) track("calendly_clicked", { from: path })
+      else if (to.includes("stripe.com")) track("stripe_clicked", { from: path })
+      else if (to.includes("getdoublenickel.com")) track("dn_listing_clicked", { from: path })
+    }
+    return <a href={to} target={to.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className={className} onClick={onClick} {...rest}>{children}</a>
+  }
   const active = path === to.split("#")[0]
   return (
     <a
@@ -168,6 +178,7 @@ export function Footer() {
             <a href="https://seatedsocial.com/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy policy</a>
             <a href="https://seatedsocial.com/terms-of-service" target="_blank" rel="noopener noreferrer">Terms of service</a>
             <a href="https://seatedsocial.com/disclaimers" target="_blank" rel="noopener noreferrer">Disclaimers</a>
+            <Link to="/drivers">Got a text from us?</Link>
             <a href="/sms-consent">SMS consent</a>
           </div>
         </div>
@@ -224,6 +235,7 @@ export function FAQ({ items }) {
 
 // Lead form post, shared by trial + playbook. Swallows network errors the way the old site did.
 export async function postLead(payload) {
+  if (payload.website) return false // honeypot filled: a bot, drop it silently
   const qs = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams()
   const body = {
     ...payload,
@@ -233,6 +245,21 @@ export async function postLead(payload) {
     utm_campaign: qs.get("utm_campaign") || "",
   }
   try {
-    await fetch("https://admin.seatedsocial.com/api/leads.php", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
-  } catch (e) { /* the lead endpoint is best effort; the thank-you still shows */ }
+    const r = await fetch("https://admin.seatedsocial.com/api/leads.php", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
+    track(payload.source === "playbook-download" ? "playbook_submitted" : "trial_submitted", { ok: r.ok, fleet: payload.fleet || "" })
+    return r.ok
+  } catch (e) {
+    track(payload.source === "playbook-download" ? "playbook_submitted" : "trial_submitted", { ok: false, fleet: payload.fleet || "" })
+    return false
+  }
+}
+
+// Hidden field bots fill in and people never see.
+export function Honeypot({ value, onChange }) {
+  return (
+    <div aria-hidden="true" style={{ position: "absolute", left: -9999, top: -9999, height: 0, overflow: "hidden" }}>
+      <label htmlFor="website">Website</label>
+      <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" value={value} onChange={onChange} />
+    </div>
+  )
 }
