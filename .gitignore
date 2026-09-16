@@ -1,13 +1,10 @@
-node_modules
-dist
-.DS_Store
-*.local
+
+# Backup files
+*.backup-*
 *.bak
-
-# Backup files
 *.bak-*
-*.backup-*
-
-# Backup files
-*.bak-*
-*.backup-*
+*.bundle
+*.local
+.DS_Store
+dist
+node_modules
