@@ -1,5 +1,5 @@
 // One table for the app router, the per-route meta at build time, and the sitemap.
-export const SITE = "https://seatedsignal.com"
+export const SITE = "https://www.seatedsignal.com"
 
 export const ROUTES = [
   { path: "/", title: "Seated Signal | SMS driver retention for trucking carriers", description: "Seated Signal texts your drivers from a number that belongs to your carrier, reads every reply, and puts the ones that need a person in front of one. Live in 48 hours. Month to month.", priority: "1.0" },
