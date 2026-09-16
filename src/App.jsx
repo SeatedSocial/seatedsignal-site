@@ -8,21 +8,16 @@ import Trial from "./pages/Trial"
 import Playbook from "./pages/Playbook"
 import SmsConsent from "./pages/SmsConsent"
 import DoubleNickel from "./pages/DoubleNickel"
+import Drivers from "./pages/Drivers"
+import NotFound from "./pages/NotFound"
+import { ROUTES } from "./routes"
 
-const TITLES = {
-  "/": "Seated Signal | SMS driver retention for trucking carriers",
-  "/features": "Features | Seated Signal",
-  "/pricing": "Pricing | Seated Signal",
-  "/trial": "Free trial | Seated Signal",
-  "/playbook": "The First 90 Days Playbook | Seated Signal",
-  "/sms-consent": "SMS consent | Seated Signal",
-  "/integrations/double-nickel": "Double Nickel integration | Seated Signal",
-}
+const TITLES = Object.fromEntries(ROUTES.map((r) => [r.path, r.title]))
 
 function Page() {
   const { path, go } = useRoute()
 
-  useEffect(() => { document.title = TITLES[path] || TITLES["/"] }, [path])
+  useEffect(() => { document.title = TITLES[path] || "Page not found | Seated Signal" }, [path])
 
   // /uconnect was a 2026 conference landing page. Its QR codes still exist, so keep the path and send it home.
   useEffect(() => { if (path === "/uconnect") go("/") }, [path])
@@ -35,7 +30,9 @@ function Page() {
     path === "/trial" ? <Trial /> :
     path === "/playbook" ? <Playbook /> :
     path === "/integrations/double-nickel" ? <DoubleNickel /> :
-    <Home />
+    path === "/drivers" ? <Drivers /> :
+    path === "/" || path === "/uconnect" ? <Home /> :
+    <NotFound />
 
   return (
     <>
