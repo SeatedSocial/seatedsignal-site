@@ -7,6 +7,7 @@ import Pricing from "./pages/Pricing"
 import Trial from "./pages/Trial"
 import Playbook from "./pages/Playbook"
 import SmsConsent from "./pages/SmsConsent"
+import DoubleNickel from "./pages/DoubleNickel"
 
 const TITLES = {
   "/": "Seated Signal | SMS driver retention for trucking carriers",
@@ -15,6 +16,7 @@ const TITLES = {
   "/trial": "Free trial | Seated Signal",
   "/playbook": "The First 90 Days Playbook | Seated Signal",
   "/sms-consent": "SMS consent | Seated Signal",
+  "/integrations/double-nickel": "Double Nickel integration | Seated Signal",
 }
 
 function Page() {
@@ -32,6 +34,7 @@ function Page() {
     path === "/pricing" ? <Pricing /> :
     path === "/trial" ? <Trial /> :
     path === "/playbook" ? <Playbook /> :
+    path === "/integrations/double-nickel" ? <DoubleNickel /> :
     <Home />
 
   return (

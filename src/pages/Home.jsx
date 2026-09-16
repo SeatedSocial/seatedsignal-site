@@ -1,3 +1,4 @@
+import { useRef, useState } from "react"
 import { Btn, Link, Thread, CtaBand } from "../components/ui"
 import { useFx, gsap, ScrollTrigger, wordReveal, rise, parallax, countUp, Words } from "../motion"
 
@@ -112,7 +113,9 @@ export default function Home() {
     parallax(q(".report .queue"), q(".report")[0], -8)
 
     // Testimonial + walled off + generic reveals
-    rise(q(".quote-block > *"), { trigger: q(".quote-block")[0] })
+    rise(q(".testimonial .copy > *"), { trigger: q(".testimonial")[0] })
+    rise(q(".testimonial .phone"), { y: 40, trigger: q(".testimonial")[0] })
+    rise(q(".works .works-row > *"), { stagger: 0.1, trigger: q(".works")[0] })
     rise(q(".facts .fact"), { stagger: 0.1, trigger: q(".facts")[0] })
     rise(q(".walled .head > *"), { trigger: q(".walled")[0] })
 
@@ -154,6 +157,21 @@ export default function Home() {
               <div className="src">{p.src}</div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Works with */}
+      <section className="works">
+        <div className="container">
+          <div className="works-row">
+            <div className="works-logos">
+              <img src="/brand/double-nickel-dark.png" alt="Double Nickel" height="26" />
+              <span className="plus" aria-hidden="true">+</span>
+              <img src="/brand/mark.svg" alt="" height="22" />
+            </div>
+            <p>A listed Double Nickel integration partner. When a recruiter marks a driver hired, the driver is in Signal and the first check-in is scheduled. No export, no spreadsheet.</p>
+            <Link to="/integrations/double-nickel" className="textlink">See how it works &rarr;</Link>
+          </div>
         </div>
       </section>
 
@@ -292,13 +310,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonial */}
-      <section className="section">
-        <div className="container">
-          <div className="quote-block">
-            <img className="mark" src="/brand/mark.svg" alt="" width="44" height="22" />
-            {/* TESTIMONIAL PLACEHOLDER. Replace with Radell's exact wording before production. */}
-            <div className="placeholder">Radell Andrews, Recruiting and Retention Manager at Brady Trucking. Exact quote to be supplied by Alex.</div>
+      {/* Testimonial: Radell, clip 10 */}
+      <section className="section testimonial">
+        <div className="container grid split reverse">
+          <VideoCard />
+          <div className="copy">
+            <div className="eyebrow">From a carrier</div>
+            <blockquote className="big-quote">"Signal has opened a door for the drivers to get in contact with me."</blockquote>
+            <cite className="mono">Radell Andrews · Recruiting and Retention Manager · Brady Trucking</cite>
+            <p style={{ marginTop: 26 }}>Seventy seconds on the driver who was one phone call from turning in his truck at day 30, and why he's still driving.</p>
           </div>
         </div>
       </section>
@@ -322,6 +342,36 @@ export default function Home() {
         title="Live in 48 hours. Month to month."
         body="Fourteen days free. No card. We set it up, you approve the messages, and the first texts go out the same week."
       />
+    </div>
+  )
+}
+
+function VideoCard() {
+  const ref = useRef(null)
+  const [playing, setPlaying] = useState(false)
+  const toggle = () => {
+    const v = ref.current
+    if (!v) return
+    if (v.paused) { v.play(); setPlaying(true) } else { v.pause(); setPlaying(false) }
+  }
+  return (
+    <div className="phone">
+      <video
+        ref={ref}
+        className="phone-video"
+        src="/video/radell-day30.mp4"
+        poster="/video/radell-day30-poster.jpg"
+        playsInline
+        preload="metadata"
+        onEnded={() => setPlaying(false)}
+        onClick={toggle}
+      />
+      {!playing && (
+        <button className="play" onClick={toggle} aria-label="Play Radell's story">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+        </button>
+      )}
+      <div className="phone-label mono">RADELL ANDREWS · BRADY TRUCKING · 1:13</div>
     </div>
   )
 }

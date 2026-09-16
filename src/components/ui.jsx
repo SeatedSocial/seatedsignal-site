@@ -155,6 +155,7 @@ export function Footer() {
             <Link to="/pricing">Pricing</Link>
             <Link to="/trial">Free trial</Link>
             <Link to="/playbook">First 90 playbook</Link>
+            <Link to="/integrations/double-nickel">Double Nickel integration</Link>
           </div>
           <div className="col">
             <h4>Talk to us</h4>
