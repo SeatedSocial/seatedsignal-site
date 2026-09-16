@@ -335,9 +335,9 @@ export default function Home() {
             <h2>Your drivers, your number, your data.</h2>
           </div>
           <div className="facts">
-            <div className="fact"><h3>Your own front door</h3><p>Every carrier gets its own subdomain, its own login, and its own text number. No shared portal.</p></div>
-            <div className="fact"><h3>Scoped to the person</h3><p>A terminal manager sees only their terminal's drivers. Recruiters see what they're assigned.</p></div>
-            <div className="fact"><h3>Nobody else's fleet</h3><p>Nothing about your drivers is visible to any other carrier on Signal. Every query is scoped to you.</p></div>
+            <div className="fact"><h3>Your own front door</h3><p>Every carrier gets its own web address, its own login, and its own text number. No shared portal.</p></div>
+            <div className="fact"><h3>Logins by terminal</h3><p>A terminal manager sees only their terminal's drivers. Recruiters see what they're assigned.</p></div>
+            <div className="fact"><h3>Nobody else's fleet</h3><p>Nothing about your drivers is visible to any other carrier on Signal. Your data lives in your account and nowhere else.</p></div>
           </div>
         </div>
       </section>

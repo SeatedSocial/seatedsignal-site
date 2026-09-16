@@ -168,12 +168,12 @@ export default function Features() {
         eyebrow="Setup and admin"
         title="Yours from the first login."
         items={[
-          ["Roster in, drivers enrolled", "Import by spreadsheet, or sync by webhook from your ATS or onboarding system. On Double Nickel, a driver marked hired is in Signal with the Day 1 check-in scheduled, nothing to export."],
-          ["Scoped users", "A terminal manager sees only their terminal's drivers. Recruiters see what they're assigned."],
+          ["Roster in, drivers enrolled", "Import by spreadsheet, or let your ATS or onboarding system send new hires to Signal on its own. On Double Nickel, a driver marked hired is in Signal with the Day 1 check-in scheduled, nothing to export."],
+          ["Logins by terminal", "A terminal manager sees only their terminal's drivers. Recruiters see what they're assigned."],
           ["Your templates", "Every program's messages are yours to edit in Settings, with a live preview before you save."],
           ["Your send window", "Quiet hours in your carrier's time zone, applied to every send from every program."],
-          ["Your own front door", "A branded subdomain and login for your carrier. No shared portal."],
-          ["Locked down", "Every query scoped to your carrier. Signed sessions, signed public links, and short links that can't reach the app."],
+          ["Your own front door", "Your own web address and login for your carrier. No shared portal."],
+          ["Locked down", "Your data lives in your account and nowhere else. Logins expire, public links can't be guessed, and the short links in driver texts can't reach the app."],
         ]}
       />
 

@@ -3,7 +3,7 @@ import { Btn, Reveal, FAQ, postLead, Honeypot, CALENDLY } from "../components/ui
 
 const INCLUDED = [
   "All four programs, written in your voice and approved by you",
-  "Your own text number, subdomain and login",
+  "Your own text number, web address and login",
   "Sentiment scoring, flags and the Today queue",
   "Driver Inbox with the full thread per driver",
   "Roster import from a spreadsheet or your ATS",
@@ -101,7 +101,7 @@ export default function Trial() {
         <div className="container">
           <Reveal className="narrow" style={{ marginBottom: 36 }}>
             <div className="eyebrow">Included</div>
-            <h2>The whole product, not a demo tenant.</h2>
+            <h2>The whole product, not a demo.</h2>
           </Reveal>
           <div className="facts">
             {INCLUDED.map((t, i) => <Reveal key={t} className="fact" delay={i * 50}><p style={{ color: "var(--white)", fontSize: 15.5 }}>{t}</p></Reveal>)}
