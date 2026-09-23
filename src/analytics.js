@@ -3,6 +3,10 @@
 import { inject, track as vercelTrack } from "@vercel/analytics"
 
 let posthog = null
+let firstView = true
+
+// Meta Pixel is loaded in index.html. Safe no-op if it was blocked.
+function fb(...args) { try { if (typeof window !== "undefined" && window.fbq) window.fbq(...args) } catch (e) { /* no-op */ } }
 
 export async function startAnalytics() {
   if (typeof window === "undefined") return
@@ -22,6 +26,9 @@ export async function startAnalytics() {
 }
 
 export function pageview(path) {
+  // index.html already sent the landing PageView; send one for each in-app navigation after that.
+  if (firstView) firstView = false
+  else fb("track", "PageView")
   try { posthog?.capture("$pageview", { $current_url: window.location.href, path }) } catch (e) { /* no-op */ }
 }
 
@@ -30,4 +37,8 @@ export function pageview(path) {
 export function track(name, props = {}) {
   try { vercelTrack(name, props) } catch (e) { /* custom events need a paid Vercel plan; harmless otherwise */ }
   try { posthog?.capture(name, props) } catch (e) { /* no-op */ }
+  if (name === "trial_submitted" && props.ok) fb("track", "Lead", { content_name: "pilot" })
+  else if (name === "playbook_submitted" && props.ok) fb("track", "Lead", { content_name: "playbook" })
+  else if (name === "calendly_clicked") fb("track", "Schedule", { content_name: props.from || "" })
+  else if (name === "video_played") fb("trackCustom", "VideoPlayed", { video: props.video || "" })
 }
