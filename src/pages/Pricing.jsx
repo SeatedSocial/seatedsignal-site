@@ -34,7 +34,7 @@ const FAQS = [
   ["Does anything send without a person seeing it?", "Programs you have approved run on their schedule. Anything Signal drafts on its own, a follow-up question or a Moments text, waits for a person to approve it. Sentiment scoring never sends; it opens a flag."],
   ["What if a driver opts out?", "They reply STOP and they're out, immediately, from every program. Opt-outs show up in your deliverability panel."],
   ["Can we change the messages?", "Every template is yours. Edit any program in Settings with a live preview. We write the first draft, you own it from there."],
-  ["Is there a contract?", "Month to month after the free trial. Cancel any time."],
+  ["Is there a contract?", "Month to month after the free pilot. Cancel any time."],
 ]
 
 export default function Pricing() {
@@ -44,7 +44,7 @@ export default function Pricing() {
         <div className="container">
           <div className="eyebrow">Pricing</div>
           <h1 style={{ maxWidth: 760 }}>Priced by fleet. Every program on every plan.</h1>
-          <p className="lede" style={{ marginTop: 24 }}>Fourteen days free on any tier. No card to start. Month to month after that.</p>
+          <p className="lede" style={{ marginTop: 24 }}>Try First 90 free for 30 days. No card to start. Month to month after that.</p>
         </div>
       </section>
 
@@ -59,7 +59,7 @@ export default function Pricing() {
                 <div className="fleet">{t.fleet}</div>
                 <ul>{t.features.map((f) => <li key={f} className={f.endsWith(":") ? "lead" : ""}>{f}</li>)}</ul>
                 {t.price
-                  ? <Btn to="/trial" variant={t.popular ? "primary" : "ghost"} block>Start free trial</Btn>
+                  ? <Btn to="/trial" variant={t.popular ? "primary" : "ghost"} block>Start free pilot</Btn>
                   : <Btn to={CALENDLY} variant="ghost" block>Talk to us</Btn>}
                 {t.stripe && <div className="buy"><a href={t.stripe} target="_blank" rel="noopener noreferrer">Or subscribe now</a></div>}
               </Reveal>
@@ -109,7 +109,7 @@ export default function Pricing() {
         </div>
       </section>
 
-      <CtaBand title="Not sure which tier?" body="Start the trial on any plan and we'll size it with you at the two-week review. Or book a call and we'll tell you in ten minutes." />
+      <CtaBand title="Not sure which tier?" body="Start the free pilot and we'll size the plan with you at the 30-day review. Or book a call and we'll tell you in ten minutes." />
     </>
   )
 }

@@ -2,20 +2,20 @@ import { useState } from "react"
 import { Btn, Reveal, FAQ, postLead, Honeypot, CALENDLY } from "../components/ui"
 
 const INCLUDED = [
-  "All four programs, written in your voice and approved by you",
+  "First 90 for your new hires, written in your voice and approved by you",
   "Your own text number, web address and login",
   "Sentiment scoring, flags and the Today queue",
   "Driver Inbox with the full thread per driver",
   "Roster import from a spreadsheet or your ATS",
-  "A written report at day 14: reply rates, themes, flags, and what we'd do next",
+  "Monday Minute reports every week, plus a written wrap-up at day 30",
 ]
 
 const STEPS = [
   ["Day 1", "We set up", "Your number goes live. We load your roster and draft every program in your carrier's voice."],
   ["Day 2", "You approve", "You read the messages, change what you want, and give the word."],
   ["Day 3", "First texts", "Drivers start hearing from you. Replies land in your inbox the same day."],
-  ["Week 2", "Review call", "We walk through what drivers said, which flags opened, and what the numbers look like."],
-  ["Day 14", "You decide", "Keep going month to month, or walk away with the report and no obligation."],
+  ["Day 14", "Check-in call", "We walk through what drivers said, which flags opened, and what the numbers look like."],
+  ["Day 30", "You decide", "Keep going month to month, or walk away with the report and no obligation."],
 ]
 
 export default function Trial() {
@@ -39,9 +39,9 @@ export default function Trial() {
     <>
       <section className="hero" style={{ paddingBottom: 40 }}>
         <div className="container">
-          <div className="eyebrow">14-day free trial</div>
-          <h1 style={{ maxWidth: 820 }}>Two weeks of your drivers talking back.</h1>
-          <p className="lede" style={{ marginTop: 24 }}>No card, no contract. We set it up, you approve every message, and at day 14 you have a report and a decision.</p>
+          <div className="eyebrow">Free 30-day pilot</div>
+          <h1 style={{ maxWidth: 820 }}>Thirty days of your new drivers talking back.</h1>
+          <p className="lede" style={{ marginTop: 24 }}>No card, no contract. We set it up, you approve every message, and at day 30 you have a report and a decision.</p>
         </div>
       </section>
 
@@ -77,8 +77,8 @@ export default function Trial() {
                     <div className="field"><label htmlFor="t-ats">Your ATS or onboarding system</label><input id="t-ats" value={form.ats} onChange={set("ats")} placeholder="Optional" /></div>
                   </div>
                   {err && <div className="error">{err}</div>}
-                  <Btn type="submit" block disabled={busy} arrow>{busy ? "Sending" : "Start my free trial"}</Btn>
-                  <p className="consent">By submitting, you agree that Seated Social may call, email or text you about your trial. Message and data rates may apply. Reply STOP to any text to opt out. <a href="https://seatedsocial.com/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy policy</a>.</p>
+                  <Btn type="submit" block disabled={busy} arrow>{busy ? "Sending" : "Start my free pilot"}</Btn>
+                  <p className="consent">By submitting, you agree that Seated Social may call, email or text you about your pilot. Message and data rates may apply. Reply STOP to any text to opt out. <a href="https://seatedsocial.com/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy policy</a>.</p>
                   <div className="fine">NO CARD. NO CONTRACT. WE REPLY WITHIN ONE BUSINESS DAY.</div>
                 </form>
               )}
@@ -86,7 +86,7 @@ export default function Trial() {
           </div>
           <div>
             <Reveal>
-              <div className="eyebrow dim">What the two weeks look like</div>
+              <div className="eyebrow dim">What the 30 days look like</div>
               <div className="timeline" style={{ marginTop: 8 }}>
                 {STEPS.map(([when, h, b]) => (
                   <div className="tl" key={when}><div className="when">{when}</div><h3>{h}</h3><p>{b}</p></div>
@@ -112,9 +112,9 @@ export default function Trial() {
       <section className="section">
         <div className="container">
           <FAQ items={[
-            ["Is it really free?", "Yes. No card, no invoice, no hidden setup fee. Fourteen days."],
-            ["How many drivers can we include?", "Your fleet. We'll size the plan with you at the two-week review."],
-            ["What happens at day 14?", "You get a written report: reply rates, the themes drivers raised, every flag and what happened to it. Then you decide. Month to month if you stay."],
+            ["Is it really free?", "Yes. No card, no invoice, no hidden setup fee. Thirty days."],
+            ["How many drivers can we include?", "Your new hires during the pilot. We'll size the full plan with you at the 30-day review."],
+            ["What happens at day 30?", "You get a written report: reply rates, the themes drivers raised, every flag and what happened to it. Then you decide. Month to month if you stay."],
             ["Can we stop early?", "Any time. Tell us and we shut the number off."],
           ]} />
         </div>

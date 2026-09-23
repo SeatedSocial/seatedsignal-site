@@ -88,7 +88,7 @@ export default function Playbook() {
 
       <CtaBand
         title="The playbook is the framework. Signal is the crew that runs it."
-        body="Fourteen days free. Your number, your words, a person on every reply."
+        body="Thirty days of First 90, free. Your number, your words, a person on every reply."
       />
     </>
   )

@@ -179,7 +179,7 @@ export default function Features() {
 
       <CtaBand
         title="See it running on your own drivers."
-        body="Fourteen days free on any plan. We set it up, you approve the messages, the first texts go out the same week."
+        body="Thirty days free on First 90. We set it up, you approve the messages, the first texts go out the same week."
       />
     </div>
   )

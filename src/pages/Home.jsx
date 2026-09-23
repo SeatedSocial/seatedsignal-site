@@ -139,10 +139,11 @@ export default function Home() {
               Seated Signal texts your drivers from a number that belongs to your company, reads every reply, and puts the ones that need a person in front of one. Drivers never download anything. Nothing goes out that someone at your carrier didn't write or approve.
             </p>
             <div className="row actions">
-              <Btn to="/trial" arrow>Start free trial</Btn>
+              <Btn to="/trial" arrow>Start free pilot</Btn>
+              <Btn to="/demo" variant="ghost">Watch the demo</Btn>
               <Btn to="/#how" variant="ghost">See how it works</Btn>
             </div>
-            <div className="fine">14 DAYS FREE · NO CARD · LIVE IN 48 HOURS</div>
+            <div className="fine">30 DAYS FREE · NO CARD · LIVE IN 48 HOURS</div>
           </div>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Thread name="Marcus R." sub="DRIVER · DAY 14 · NORTHFORK CARRIERS" initials="MR" msgs={HERO_THREAD} />
@@ -221,7 +222,7 @@ export default function Home() {
           <div className="panel outro">
             <h2>Live in 48 hours.</h2>
             <p>We set it up. You approve the messages. The first texts go out the same week.</p>
-            <Btn to="/trial" arrow>Start free trial</Btn>
+            <Btn to="/trial" arrow>Start free pilot</Btn>
           </div>
         </div>
       </section>
@@ -365,13 +366,13 @@ export default function Home() {
 
       <CtaBand
         title="Live in 48 hours. Month to month."
-        body="Fourteen days free. No card. We set it up, you approve the messages, and the first texts go out the same week."
+        body="Thirty days free on First 90. No card. We set it up, you approve the messages, and the first texts go out the same week."
       />
     </div>
   )
 }
 
-function VideoCard() {
+export function VideoCard() {
   const ref = useRef(null)
   const [playing, setPlaying] = useState(false)
   const toggle = () => {

@@ -124,7 +124,7 @@ export function Thread({ name, sub, initials, msgs, animate = false }) {
 // ---------------------------------------------------------------------------
 // Nav + Footer
 // ---------------------------------------------------------------------------
-const NAV = [["/features", "Features"], ["/pricing", "Pricing"], ["/playbook", "Playbook"]]
+const NAV = [["/demo", "Demo"], ["/features", "Features"], ["/pricing", "Pricing"], ["/playbook", "Playbook"]]
 
 export function Nav() {
   const [open, setOpen] = useState(false)
@@ -137,13 +137,13 @@ export function Nav() {
         <Link to="/" className="logo" aria-label="Seated Signal home"><img src="/brand/lockup-dark.svg" alt="Seated Signal" width="240" height="27" /></Link>
         <div className="links">
           {NAV.map(([to, label]) => <Link key={to} to={to}>{label}</Link>)}
-          <Btn to="/trial" size="sm">Start free trial</Btn>
+          <Btn to="/trial" size="sm">Start free pilot</Btn>
         </div>
         <button className="burger" aria-label="Menu" aria-expanded={open} onClick={() => setOpen(!open)}><span /><span /><span /></button>
       </div>
       <div className="drawer">
         {NAV.map(([to, label]) => <Link key={to} to={to}>{label}</Link>)}
-        <Link to="/trial">Start free trial</Link>
+        <Link to="/trial">Start free pilot</Link>
         <Link to={CALENDLY}>Book a call</Link>
       </div>
     </nav>
@@ -163,7 +163,8 @@ export function Footer() {
             <h4>Product</h4>
             <Link to="/features">Features</Link>
             <Link to="/pricing">Pricing</Link>
-            <Link to="/trial">Free trial</Link>
+            <Link to="/demo">Demo</Link>
+            <Link to="/trial">Free pilot</Link>
             <Link to="/playbook">First 90 playbook</Link>
             <Link to="/integrations/double-nickel">Double Nickel integration</Link>
           </div>
@@ -205,7 +206,7 @@ export function Footer() {
   )
 }
 
-export function CtaBand({ title, body, primary = ["/trial", "Start free trial"], secondary = [CALENDLY, "Book a call"] }) {
+export function CtaBand({ title, body, primary = ["/trial", "Start free pilot"], secondary = [CALENDLY, "Book a call"] }) {
   return (
     <section className="cta-band">
       <div className="container">

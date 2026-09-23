@@ -9,6 +9,7 @@ import Playbook from "./pages/Playbook"
 import SmsConsent from "./pages/SmsConsent"
 import DoubleNickel from "./pages/DoubleNickel"
 import Drivers from "./pages/Drivers"
+import Demo from "./pages/Demo"
 import NotFound from "./pages/NotFound"
 import { ROUTES } from "./routes"
 
@@ -31,6 +32,7 @@ function Page() {
     path === "/playbook" ? <Playbook /> :
     path === "/integrations/double-nickel" ? <DoubleNickel /> :
     path === "/drivers" ? <Drivers /> :
+    path === "/demo" ? <Demo /> :
     path === "/" || path === "/uconnect" ? <Home /> :
     <NotFound />
 
