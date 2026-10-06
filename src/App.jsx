@@ -10,6 +10,7 @@ import SmsConsent from "./pages/SmsConsent"
 import DoubleNickel from "./pages/DoubleNickel"
 import Drivers from "./pages/Drivers"
 import Demo from "./pages/Demo"
+import TruckingSense from "./pages/TruckingSense"
 import NotFound from "./pages/NotFound"
 import { ROUTES } from "./routes"
 
@@ -33,6 +34,7 @@ function Page() {
     path === "/integrations/double-nickel" ? <DoubleNickel /> :
     path === "/drivers" ? <Drivers /> :
     path === "/demo" ? <Demo /> :
+    path === "/truckingsense" ? <TruckingSense /> :
     path === "/" || path === "/uconnect" ? <Home /> :
     <NotFound />
 

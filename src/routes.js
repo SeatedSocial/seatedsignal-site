@@ -9,6 +9,7 @@ export const ROUTES = [
   { path: "/trial", title: "Free 30-day pilot | Seated Signal", description: "Thirty days of First 90 for your new hires, free. No card, no contract. We set it up, you approve every message.", priority: "0.8" },
   { path: "/playbook", title: "The First 90 Days Playbook | Seated Signal", description: "The SMS framework we run for carriers, written down so you can run it yourself. Free download.", priority: "0.7" },
   { path: "/integrations/double-nickel", title: "Double Nickel integration | Seated Signal", description: "Seated Signal is a listed Double Nickel integration partner. A driver marked hired in Double Nickel is in Signal with the Day 1 check-in scheduled. No export, no spreadsheet.", priority: "0.8" },
+  { path: "/truckingsense", title: "Heard us on Trucking Sense? | Seated Signal", description: "For Trucking Sense listeners: Seated Signal checks in with new drivers by text. Carriers get a free 60-day First 90 pilot through October 31, 2026.", priority: "0.6" },
   { path: "/drivers", title: "Got a text from us? | Seated Signal", description: "What Seated Signal is, who reads your replies, and how to stop the texts. For drivers.", priority: "0.5" },
   { path: "/sms-consent", title: "SMS consent | Seated Signal", description: "How SMS consent works on the Seated Signal platform.", priority: "0.3" },
 ]
